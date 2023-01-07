@@ -67,6 +67,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Spider
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 43426d58cac94fe4f9bf6b4104c933c3,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 43426d58cac94fe4f9bf6b4104c933c3, type: 3}
 --- !u!1 &8866278555970465855 stripped
@@ -105,6 +110,19 @@ CapsuleCollider:
   m_Height: 0.3
   m_Direction: 1
   m_Center: {x: 0, y: 0.15, z: 0}
+--- !u!135 &8616790384613665479
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8866278555970465855}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &1323416563
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,3 +148,20 @@ MonoBehaviour:
   m_JumpForce: 4
   m_DoubleJumpForce: 4
   m_Friction: 4
+--- !u!114 &8344183460130346599
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8866278555970465855}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaec16867f1ba5a4393a8d5a8eabc183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ColliderDistance: 2
+  m_FirstMaterial: {fileID: 2100000, guid: b4ae8214bddec5c4fad27f906740c26e, type: 2}
+  m_SecondMaterial: {fileID: 2100000, guid: 36304dcae4f07e046ab960c7f85a7633, type: 2}
+  m_CanvasRect: {fileID: 0}
+  m_WebIcon: {fileID: 0}
