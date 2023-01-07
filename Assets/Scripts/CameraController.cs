@@ -3,7 +3,6 @@ using UnityEngine;
 public class CameraController : MonoBehaviour
 {
 	[SerializeField] private Transform m_Player;
-
 	[SerializeField] private float m_LookSensitivity = 1f;
 
 	private void Start()
@@ -38,7 +37,5 @@ public class CameraController : MonoBehaviour
 	    }
 
 	    transform.localEulerAngles = angles;
-	    
-	    transform.position = m_Player.position;
     }
 }

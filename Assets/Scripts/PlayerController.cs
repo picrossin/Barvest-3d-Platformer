@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_MaxSpeed = 2f;
     [SerializeField] private float m_Accel = 2f;
     [SerializeField] private float m_TurnAnimSpeed = 2f;
+    [SerializeField] private float m_TurnAnimSpeedFast = 2f;
     [SerializeField] private float m_JumpForce = 30f;
     [SerializeField] private float m_DoubleJumpForce = 5f;
 
@@ -76,9 +77,20 @@ public class PlayerController : MonoBehaviour
         
         // Turning model
         if (m_Input.magnitude > 0.05f)
-            m_LookRotation = Quaternion.LookRotation(relativeInput, transform.up); 
-        
-        if (m_Rigidbody.velocity.magnitude > 1f)
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, m_LookRotation, m_TurnAnimSpeed);
+            m_LookRotation = Quaternion.LookRotation(relativeInput, transform.up);
+
+        if (m_Rigidbody.velocity.magnitude > 0f)
+        {
+            if (Quaternion.Angle(transform.rotation, m_LookRotation) < 100f)
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, m_LookRotation, m_TurnAnimSpeed);
+            }
+            else
+            {
+                transform.rotation = Quaternion.Slerp(transform.rotation, m_LookRotation, m_TurnAnimSpeedFast);
+            }
+        }
+
+        m_CameraRig.position = transform.position;
     }
 }
