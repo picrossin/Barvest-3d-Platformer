@@ -9,6 +9,8 @@ public class EnemyCollisionDetection : MonoBehaviour
     [SerializeField] private float m_ColliderDistance;
     [SerializeField] private Material m_FirstMaterial;
     [SerializeField] private Material m_SecondMaterial;
+    [SerializeField] private RectTransform m_CanvasRect;
+    [SerializeField] private RectTransform m_WebIcon;
 
     // Private Values
     private SphereCollider m_SphereCollider;
@@ -20,11 +22,27 @@ public class EnemyCollisionDetection : MonoBehaviour
         m_SphereCollider = GetComponent<SphereCollider>();
         m_SphereCollider.isTrigger = true;
         m_SphereCollider.radius = m_ColliderDistance;
+        m_WebIcon.gameObject.SetActive(false);
     }
 
     void Update()
     {
         GameObject closestEnemy = GetClosestEnemy();
+        if (closestEnemy)
+        {
+            closestEnemy.GetComponent<MeshRenderer>().material = m_SecondMaterial;
+            Vector2 viewportPos = Camera.main.WorldToViewportPoint(closestEnemy.transform.position);
+            Vector2 targetPoint = new Vector2(
+                viewportPos.x * m_CanvasRect.sizeDelta.x - m_CanvasRect.sizeDelta.x * 0.5f,
+                viewportPos.y * m_CanvasRect.sizeDelta.y - m_CanvasRect.sizeDelta.y * 0.5f);
+
+            m_WebIcon.gameObject.SetActive(true);
+            m_WebIcon.anchoredPosition = targetPoint;
+        } else
+        {
+            m_WebIcon.gameObject.SetActive(false);
+        }
+
         if (closestEnemy != m_ClosestEnemy)
         {
             Debug.Log("Closest enemy changed");

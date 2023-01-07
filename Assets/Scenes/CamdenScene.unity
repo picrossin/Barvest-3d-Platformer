@@ -1823,6 +1823,8 @@ MonoBehaviour:
   m_ColliderDistance: 4
   m_FirstMaterial: {fileID: 2100000, guid: b4ae8214bddec5c4fad27f906740c26e, type: 2}
   m_SecondMaterial: {fileID: 2100000, guid: 36304dcae4f07e046ab960c7f85a7633, type: 2}
+  m_CanvasRect: {fileID: 1601875097}
+  m_WebIcon: {fileID: 1831799275}
 --- !u!54 &1112662058
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1851,6 +1853,7 @@ GameObject:
   - component: {fileID: 1601875096}
   - component: {fileID: 1601875095}
   - component: {fileID: 1601875094}
+  - component: {fileID: 1601875098}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -1897,7 +1900,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!223 &1601875096
 Canvas:
   m_ObjectHideFlags: 0
@@ -1907,7 +1910,7 @@ Canvas:
   m_GameObject: {fileID: 1601875093}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 2
+  m_RenderMode: 0
   m_Camera: {fileID: 0}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
@@ -1928,7 +1931,7 @@ RectTransform:
   m_GameObject: {fileID: 1601875093}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1831799275}
@@ -1937,9 +1940,21 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 19, y: 197}
-  m_SizeDelta: {x: 128, y: 128}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
+--- !u!114 &1601875098
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1601875093}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 279c274bb2555a24eb67fbac9214a116, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1622446969
 GameObject:
   m_ObjectHideFlags: 0
@@ -2051,7 +2066,7 @@ GameObject:
   - component: {fileID: 1831799277}
   - component: {fileID: 1831799276}
   m_Layer: 5
-  m_Name: Image
+  m_Name: WebIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2075,7 +2090,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 48, y: 48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1831799276
 MonoBehaviour:
