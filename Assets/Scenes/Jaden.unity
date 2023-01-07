@@ -488,8 +488,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Player: {fileID: 1323416562}
-  m_LookSensitivity: 80
-  m_SmoothingSpeed: 2
+  m_LookSensitivity: 100
+  m_CameraVerticalFollowOffset: 0.5
 --- !u!1 &816982031
 GameObject:
   m_ObjectHideFlags: 0
@@ -845,7 +845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bd6043bde05a7fc4cba197d06915c1e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Damping: {x: 0, y: 0, z: 0}
+  Damping: {x: 0.5, y: 0.5, z: 0.5}
   ShoulderOffset: {x: 0, y: 0, z: 0}
   VerticalArmLength: 0.4
   CameraSide: 0.5
@@ -854,9 +854,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 8
   IgnoreTag: 
-  CameraRadius: 0.2
-  DampingIntoCollision: 0
-  DampingFromCollision: 2
+  CameraRadius: 0.344
+  DampingIntoCollision: 5.25
+  DampingFromCollision: 3.94
 --- !u!114 &1265903756
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -924,11 +924,15 @@ MonoBehaviour:
   m_GroundLayerMask:
     serializedVersion: 2
     m_Bits: 8
-  m_MaxSpeed: 4
+  m_noFriction: {fileID: 13400000, guid: 78796d88b88ef9649bd3fbaf09db25ce, type: 2}
+  m_HighFriction: {fileID: 13400000, guid: 4813dd0981104e74eaa302004c0a621c, type: 2}
+  m_MaxSpeed: 3
   m_Accel: 3
-  m_TurnAnimSpeed: 10
+  m_TurnAnimSpeed: 0.2
+  m_TurnAnimSpeedFast: 0.7
   m_JumpForce: 4
-  m_DoubleJumpForce: 3
+  m_DoubleJumpForce: 4
+  m_Friction: 4
 --- !u!54 &1323416564
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -942,7 +946,7 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 1
+  m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 1
 --- !u!136 &1323416565
@@ -952,7 +956,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1323416559}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 78796d88b88ef9649bd3fbaf09db25ce, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   m_Radius: 0.02
