@@ -24,7 +24,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 200}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 12885
+  controlID: 12963
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -312,14 +312,14 @@ MonoBehaviour:
   m_OverrideSceneCullingMask: 6917529027641081856
   m_SceneIsLit: 1
   m_SceneLighting: 1
-  m_2DMode: 0
+  m_2DMode: 1
   m_isRotationLocked: 0
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -0.35487986, y: 0.16855562, z: 0.16611362}
+    m_Target: {x: -1.094188, y: -0.056142796, z: -0.4132038}
     speed: 2
-    m_Value: {x: -0.35487986, y: 0.16855562, z: 0.16611362}
+    m_Value: {x: -0.96730447, y: -0.005191505, z: -0.4124321}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -348,7 +348,7 @@ MonoBehaviour:
       m_Size: {x: 0.5, y: 0.5}
     yGrid:
       m_Fade:
-        m_Target: 1
+        m_Target: 0
         speed: 2
         m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
@@ -356,9 +356,9 @@ MonoBehaviour:
       m_Size: {x: 0.5, y: 0.5}
     zGrid:
       m_Fade:
-        m_Target: 0
+        m_Target: 1
         speed: 2
-        m_Value: 0
+        m_Value: 1
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
       m_Size: {x: 0.5, y: 0.5}
@@ -366,17 +366,18 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.09639324, y: -0.9005163, z: 0.25797305, w: -0.33648512}
+    m_Target: {x: 0, y: 0, z: 0, w: 1}
     speed: 2
-    m_Value: {x: 0.09639324, y: 0.9005163, z: -0.25797305, w: 0.33648515}
+    m_Value: {x: -0.000000010846131, y: -0.00000005289493, z: 0.0000000139580205,
+      w: -1.0000001}
   m_Size:
-    m_Target: 1.1586291
+    m_Target: 1.7920356
     speed: 2
-    m_Value: 1.1586291
+    m_Value: 1.7148666
   m_Ortho:
-    m_Target: 0
+    m_Target: 1
     speed: 2
-    m_Value: 0
+    m_Value: 1
   m_CameraSettings:
     m_Speed: 1
     m_SpeedNormalized: 0.5
@@ -390,7 +391,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_LastSceneViewRotation: {x: -0.15655461, y: -0.763493, z: 0.20147207, w: -0.59327763}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -421,7 +422,7 @@ MonoBehaviour:
   m_MinSize: {x: 200, y: 200}
   m_MaxSize: {x: 16192, y: 16192}
   vertical: 0
-  controlID: 12886
+  controlID: 12964
 --- !u!114 &4
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -446,7 +447,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 12887
+  controlID: 12965
 --- !u!114 &5
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -466,8 +467,8 @@ MonoBehaviour:
     y: 0
     width: 1465
     height: 671
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 2}
@@ -492,8 +493,8 @@ MonoBehaviour:
     y: 671
     width: 1465
     height: 646
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 7}
   m_Panes:
   - {fileID: 7}
@@ -616,7 +617,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 12859
+  controlID: 12943
 --- !u!114 &9
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -636,8 +637,8 @@ MonoBehaviour:
     y: 0
     width: 490
     height: 764
-  m_MinSize: {x: 201, y: 221}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 200, y: 200}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 10}
   m_Panes:
   - {fileID: 10}
@@ -675,8 +676,8 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
+      m_SelectedIDs: 3adafdff
+      m_LastClickedID: -140742
       m_ExpandedIDs: d45fffffc09ffffffaaaffffdaf1ffff32fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
@@ -770,21 +771,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Textures/Floors
+    - Assets/Textures
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Textures/Floors
+  - Assets/Textures
   m_LastFoldersGridSize: 16
   m_LastProjectPath: D:\Jaden\Games\Unity\ld52spidergame
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: 8e9a0000
-    m_LastClickedID: 39566
+    m_SelectedIDs: 8c9a0000
+    m_LastClickedID: 39564
     m_ExpandedIDs: 000000008a6700008c9a0000ffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
@@ -838,8 +839,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: 3adafdff
+    m_LastClickedInstanceID: -140742
     m_HadKeyboardFocusLastEvent: 0
     m_ExpandedInstanceIDs: c6230000
     m_RenameOverlay:
