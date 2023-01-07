@@ -27,6 +27,7 @@ public class EnemyCollisionDetection : MonoBehaviour
         GameObject closestEnemy = GetClosestEnemy();
         if (closestEnemy != m_ClosestEnemy)
         {
+            Debug.Log("Closest enemy changed");
             IndicateClosestEnemy(m_ClosestEnemy, closestEnemy);
             m_ClosestEnemy = closestEnemy;
         }
@@ -52,6 +53,7 @@ public class EnemyCollisionDetection : MonoBehaviour
         // If there is only one enemy in range return that enemy
         if (m_EnemiesInRange.Count == 1) return m_EnemiesInRange[0];
 
+        Debug.Log("Getting closest enemy");
         // Set up base values for comparing against all other enemies in range
         GameObject closestEnemy = m_EnemiesInRange[0];
         float shortestDistance = Vector3.Distance(transform.position, closestEnemy.transform.position);
