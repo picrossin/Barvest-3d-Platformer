@@ -59,13 +59,11 @@ public class BasicEnemy : MonoBehaviour
         if (m_Enemy.remainingDistance > m_Enemy.stoppingDistance) return;
         if (m_Enemy.hasPath || m_Enemy.velocity.sqrMagnitude != 0f) return;
 
-        Debug.Log("Destination Reached!");
         StartCoroutine(SmoothTurn());
     }
 
     IEnumerator SmoothTurn()
     {
-        Debug.Log("Turn Initiated");
         // Start turning
         m_Turning = true;
 
