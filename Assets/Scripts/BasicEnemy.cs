@@ -7,11 +7,14 @@ public class BasicEnemy : MonoBehaviour
 {
     // Editor values
     [SerializeField] private List<Vector3> m_PathPositions;
+    [SerializeField] private float m_MoveSpeed;
+    [SerializeField] private float m_UnderAttackSpeed;
 
     // Private values
     private NavMeshAgent m_Enemy;
     private int m_CurrentDestinationIndex;
     private bool m_Turning = false;
+    [SerializeField] private bool m_UnderAttack = true;
 
     // AddPositionToPath is used by an editor script to populate the m_PathPositions List
     public void AddPositionToPath()
@@ -30,6 +33,17 @@ public class BasicEnemy : MonoBehaviour
         // Draw Debug Ray
         Vector3 forward = transform.TransformDirection(Vector3.forward) * 1;
         Debug.DrawRay(transform.position, forward, Color.green);
+
+        // Check if under attack
+        if (m_UnderAttack && m_Enemy.speed == m_MoveSpeed)
+        {
+            Debug.Log("Under Attack!!!");
+            m_Enemy.speed = m_UnderAttackSpeed;
+        } else if (!m_UnderAttack && m_Enemy.speed == m_UnderAttackSpeed)
+        {
+            Debug.Log("No Longer Under Attack, Yippee!!!");
+            m_Enemy.speed = m_MoveSpeed;
+        }
 
         // Move
         MoveEnemy();
