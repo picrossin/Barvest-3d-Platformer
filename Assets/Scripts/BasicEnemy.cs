@@ -3,23 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
 public class BasicEnemy : MonoBehaviour
 {
     // Editor values
     [SerializeField] private List<Vector3> m_PathPositions;
-    [SerializeField] private float m_MoveSpeed;
-    [SerializeField] private float m_UnderAttackSpeed;
+    [SerializeField] private float m_MoveSpeed = 3.5f;
+    [SerializeField] private float m_UnderAttackSpeed = 0.5f;
 
     // Private values
     private NavMeshAgent m_Enemy;
     private int m_CurrentDestinationIndex;
     private bool m_Turning = false;
-    [SerializeField] private bool m_UnderAttack = true;
+    [SerializeField] private bool m_UnderAttack = false;
 
     // AddPositionToPath is used by an editor script to populate the m_PathPositions List
     public void AddPositionToPath()
     {
-        m_PathPositions.Add(this.transform.position);
+        m_PathPositions.Add(transform.position);
     }
 
     void Start()
