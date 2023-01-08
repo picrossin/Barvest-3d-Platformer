@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class ElementCollider : MonoBehaviour
 {
     [SerializeField] private float m_TrampolineForce = 7.5f;
+    [SerializeField] private Vector3 _respawnCoordinates;
 
     private bool m_Died = false;
     private bool m_SpeedChanged = false;
@@ -55,6 +56,13 @@ public class ElementCollider : MonoBehaviour
         {
             Debug.Log("Increase Collectible Score!");
             Destroy(other.gameObject);
+        }
+
+        // Checkpoint layer collider
+        if (other.gameObject.layer == 10)
+        {
+            Debug.Log("Checkpoint!");
+            GameplayManager.Instance.Respawn.SetRespawnPoint(_respawnCoordinates);
         }
     }
     private void OnTriggerExit(Collider other)
