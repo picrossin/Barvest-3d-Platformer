@@ -10,6 +10,7 @@ public class GrappleDistanceDetection : MonoBehaviour
     [SerializeField] private Material m_SecondMaterial;
     [SerializeField] private RectTransform m_CanvasRect;
     [SerializeField] private RectTransform m_WebIcon;
+    [SerializeField] private EnemyDistanceDetection m_EnemyDetection;
 
     // Private Values
     private GameObject m_ClosestGrapple;
@@ -66,6 +67,9 @@ public class GrappleDistanceDetection : MonoBehaviour
     // Get the closest grapple to the player using the m_EnemiesInRange list
     private GameObject GetClosestGrapple()
     {
+        if (m_EnemyDetection.ClosestEnemy != null)
+            return null;
+        
         // If there are no grapples range return null
         if (m_GrapplesInRange.Count == 0) return null;
         // If there is only one grapple in range return that grapple
