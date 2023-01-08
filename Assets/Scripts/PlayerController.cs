@@ -19,6 +19,7 @@ public class PlayerController : MonoBehaviour
         get => m_MaxSpeed;
         set => m_MaxSpeed = value;
     }
+    
     [SerializeField] private float m_Accel = 2f;
     [SerializeField] private float m_TurnAnimSpeed = 2f;
     [SerializeField] private float m_TurnAnimSpeedFast = 2f;
@@ -26,10 +27,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_DoubleJumpForce = 5f;
     [SerializeField] private float m_Friction = 1f;
     [SerializeField] private float m_CameraFollowDistance = 3f;
+    [SerializeField] private float m_GrappleExtraForce = 3f;
 
     private Rigidbody m_Rigidbody;
     private Collider m_Collider;
     private EnemyDistanceDetection m_EnemyDistanceDetection;
+    private GrappleDistanceDetection m_GrappleDistanceDetection;
     private Cinemachine3rdPersonFollow m_ThirdPersonCam;
     private LineRenderer m_WebLineRenderer;
 
@@ -43,18 +46,31 @@ public class PlayerController : MonoBehaviour
         get => m_DoubleJumped;
         set => m_DoubleJumped = value;
     }
-    
+
+    private bool m_MoveAlternate;
+
+    public bool MoveAlternate
+    {
+        get => m_MoveAlternate;
+        set => m_MoveAlternate = value;
+    }
+
     private bool m_Wrapping;
     private BasicEnemy m_WrappingEnemy;
     private float m_WrapStartAngle;
     private float[] m_WrapAngles = { 45f, 90f, 135f, 180f, -135f, -90f, -45f, 0f, 45f, 90f, 135f, 180f, -135f, -90f, -45f};
     private int m_CurrentAngle = 7;
 
+    private bool m_Grappling;
+    private GameObject m_GrapplePoint;
+    private SpringJoint m_GrappleJoint;
+
     private void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
         m_Collider = GetComponent<Collider>();
         m_EnemyDistanceDetection = GetComponentInChildren<EnemyDistanceDetection>();
+        m_GrappleDistanceDetection = GetComponentInChildren<GrappleDistanceDetection>();
         m_ThirdPersonCam = m_ThirdPersonVirtualCam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
         m_ThirdPersonCam.CameraDistance = m_CameraFollowDistance;
     }
@@ -84,7 +100,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        Debug.Log(m_EnemyDistanceDetection);
         // Shoot web
         if (m_EnemyDistanceDetection.ClosestEnemy != null && Input.GetMouseButtonDown(0) && !m_Wrapping)
         {
@@ -113,16 +128,20 @@ public class PlayerController : MonoBehaviour
             Vector3 diff = transform.position - m_WrappingEnemy.transform.position;
             float currentDegree = (m_WrapStartAngle - Mathf.Atan2(diff.x, diff.z)) * Mathf.Rad2Deg;
 
-            if (Mathf.Abs(m_WrapAngles[m_CurrentAngle + 1] - currentDegree) <= 7f)
+            Debug.Log($"Current angle: {currentDegree}");
+            
+            if (Mathf.Abs(m_WrapAngles[m_CurrentAngle + 1] - currentDegree) <= 20f)
             {
+                Debug.Log($"Reached angle: {m_WrapAngles[m_CurrentAngle + 1]}");
                 m_CurrentAngle++;
                 if (m_CurrentAngle == m_WrapAngles.Length - 1)
                 {
                     Wrapped();
                 }
             }
-            else if (Mathf.Abs(m_WrapAngles[m_CurrentAngle - 1] - currentDegree) <= 7f)
+            else if (Mathf.Abs(m_WrapAngles[m_CurrentAngle - 1] - currentDegree) <= 20f)
             {
+                Debug.Log($"Reached angle: {m_WrapAngles[m_CurrentAngle - 1]}");
                 m_CurrentAngle--;
                 if (m_CurrentAngle == 0)
                 {
@@ -132,6 +151,42 @@ public class PlayerController : MonoBehaviour
             else if (Input.GetMouseButtonUp(0))
             {
                 Wrapped();
+            }
+        }
+        
+        // Shoot grapple web
+        if (m_GrappleDistanceDetection.ClosestGrapple != null && Input.GetMouseButtonDown(0) && !m_Grappling)
+        {
+            m_Grappling = true;
+            m_GrapplePoint = m_GrappleDistanceDetection.ClosestGrapple;
+            
+            m_WebLineRenderer = Instantiate(m_WebLine, Vector3.zero, Quaternion.identity).GetComponent<LineRenderer>();
+
+            m_GrappleJoint = gameObject.AddComponent<SpringJoint>();
+            m_GrappleJoint.autoConfigureConnectedAnchor = false;
+            m_GrappleJoint.connectedAnchor = m_GrapplePoint.transform.position;
+
+            float distanceFromPoint = Vector3.Distance(transform.position, m_GrapplePoint.transform.position);
+
+            m_GrappleJoint.maxDistance = distanceFromPoint * 0.6f;
+            m_GrappleJoint.minDistance = distanceFromPoint * 0.25f;
+
+            m_GrappleJoint.spring = 4.5f;
+            m_GrappleJoint.damper = 7f;
+            m_GrappleJoint.massScale = 4.5f;
+        }
+
+        if (m_Grappling)
+        {
+            m_WebLineRenderer.SetPositions(new[] {transform.position + Vector3.up * 0.2f, m_GrapplePoint.transform.position});
+
+            if (Input.GetMouseButtonUp(0) || Input.GetKeyDown(KeyCode.Space))
+            {
+                m_Grappling = false;
+                m_GrapplePoint = null;
+                Destroy(m_GrappleJoint);
+                Destroy(m_WebLineRenderer.gameObject);
+                m_Rigidbody.AddForce(m_Rigidbody.velocity.normalized * m_GrappleExtraForce, ForceMode.Impulse);
             }
         }
     }
@@ -195,6 +250,12 @@ public class PlayerController : MonoBehaviour
         {
             m_Rigidbody.AddForce(-rbXZVelocity * m_Friction);
         }
+    }
+
+    public bool Grounded()
+    {
+        return Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, out RaycastHit hit,
+            0.3f, m_GroundLayerMask);
     }
 
     private void Wrapped()
