@@ -12,10 +12,16 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] private float m_UnderAttackSpeed = 0.5f;
 
     // Private values
+    [SerializeField] private bool m_UnderAttack = false;
+    public bool UnderAttack
+    {
+        get => m_UnderAttack;
+        set => m_UnderAttack = value;
+    }
+
     private NavMeshAgent m_Enemy;
     private int m_CurrentDestinationIndex;
     private bool m_Turning = false;
-    [SerializeField] private bool m_UnderAttack = false;
 
     // AddPositionToPath is used by an editor script to populate the m_PathPositions List
     public void AddPositionToPath()
@@ -27,6 +33,8 @@ public class BasicEnemy : MonoBehaviour
     {
         m_Enemy = GetComponent<NavMeshAgent>();
         m_Enemy.destination = m_PathPositions[m_CurrentDestinationIndex];
+        m_Enemy.speed = m_MoveSpeed;
+        m_Enemy.updatePosition = false;
     }
 
     void Update()
@@ -48,6 +56,11 @@ public class BasicEnemy : MonoBehaviour
 
         // Move
         MoveEnemy();
+    }
+
+    private void FixedUpdate()
+    {
+        transform.position = m_Enemy.nextPosition;
     }
 
     void MoveEnemy()

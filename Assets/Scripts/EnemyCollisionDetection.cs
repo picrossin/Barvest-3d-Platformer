@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,9 +12,11 @@ public class EnemyCollisionDetection : MonoBehaviour
     [SerializeField] private RectTransform m_WebIcon;
 
     // Private Values
+    private GameObject m_ClosestEnemy;
+    public GameObject ClosestEnemy => m_ClosestEnemy;
+
     private SphereCollider m_SphereCollider;
     private List<GameObject> m_EnemiesInRange = new List<GameObject>();
-    private GameObject m_ClosestEnemy;
 
     void Start()
     {
