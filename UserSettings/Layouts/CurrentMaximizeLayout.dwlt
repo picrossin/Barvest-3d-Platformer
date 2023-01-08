@@ -26,7 +26,7 @@ MonoBehaviour:
   m_MinSize: {x: 400, y: 300}
   m_MaxSize: {x: 32384, y: 24288}
   vertical: 0
-  controlID: 67310
+  controlID: 92396
 --- !u!114 &2
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -139,8 +139,8 @@ MonoBehaviour:
     y: 0
     width: 174
     height: 1307
-  m_MinSize: {x: 137, y: 51}
-  m_MaxSize: {x: 4001, y: 4021}
+  m_MinSize: {x: 136, y: 30}
+  m_MaxSize: {x: 4000, y: 4000}
   m_ActualView: {fileID: 4}
   m_Panes:
   - {fileID: 4}
@@ -198,7 +198,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 200}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 67289
+  controlID: 92295
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -528,9 +528,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -4.508593, y: 17.99135, z: -3.0956116}
+    m_Target: {x: 33.83714, y: 36.814262, z: -32.118515}
     speed: 2
-    m_Value: {x: -4.508593, y: 17.99135, z: -3.0956116}
+    m_Value: {x: 33.83714, y: 36.814262, z: -32.118515}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -572,18 +572,18 @@ MonoBehaviour:
         m_Value: 0
       m_Color: {r: 0.5, g: 0.5, b: 0.5, a: 0.4}
       m_Pivot: {x: 0, y: 0, z: 0}
-      m_Size: {x: 0, y: 0}
+      m_Size: {x: 1, y: 1}
     m_ShowGrid: 1
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.47649726, y: 0.0025997807, z: -0.00027599742, w: -0.8788652}
+    m_Target: {x: -0.5571369, y: 0.26006764, z: -0.18780796, w: -0.76540864}
     speed: 2
-    m_Value: {x: -0.47662583, y: 0.0026004822, z: -0.0002760719, w: -0.87910235}
+    m_Value: {x: -0.5573713, y: 0.26017708, z: -0.187887, w: -0.76573074}
   m_Size:
-    m_Target: 11.828886
+    m_Target: 7.7942286
     speed: 2
-    m_Value: 11.828886
+    m_Value: 7.7942286
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -601,7 +601,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: 0, y: 0, z: 0, w: 0}
+  m_LastSceneViewRotation: {x: -0.5158759, y: -0.09680222, z: 0.060224295, w: -0.84867316}
   m_LastSceneViewOrtho: 0
   m_ReplacementShader: {fileID: 0}
   m_ReplacementString: 
@@ -659,7 +659,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 300}
   m_MaxSize: {x: 8096, y: 24288}
   vertical: 1
-  controlID: 67230
+  controlID: 92362
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -717,10 +717,10 @@ MonoBehaviour:
     m_SaveData: []
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 0}
+      scrollPos: {x: 0, y: 242}
       m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: d824f1fff4d9f2ff36e2f2ff96e7f2ff6a6ef3ff98b7f3ffe6bdf3ffce30f4ff6c77f4ff327df4ff2a8df4ff72c4f4ffd2d5f4ffda30f7ff949ef8ff0ca7f8ffd0bcf8ff5ce6f8ff8091fcffe405fdff6c98ffff7298ffff3699ffff6a99ffff44b1ffffa8bcffffdabeffff76daffffa0daffffb4f3ffffe8f4ffff1ef5ffffbcf6ffffdaf6ffff1efbffff70960200
+      m_ExpandedIDs: de55f0ffe255f0ff427cf0ff8ea5f0ffd824f1fff4d9f2ff36e2f2ff96e7f2ff6a6ef3ff98b7f3ffe6bdf3ffce30f4ff6c77f4ff327df4ff2a8df4ff72c4f4ffd2d5f4ffda30f7ff949ef8ff0ca7f8ffd0bcf8ff5ce6f8ff8091fcffe405fdff6c98ffff7298ffff3699ffff6a99ffff44b1ffffa8bcffffdabeffff76daffffa0daffffb4f3ffffe8f4ffff1ef5ffffbcf6ffffdaf6ffff1efbffff7096020040e80200
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -812,21 +812,21 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Materials
+    - Assets/Prefabs/LevelElements
     m_Globs: []
     m_OriginalText: 
   m_ViewMode: 1
   m_StartGridSize: 16
   m_LastFolders:
-  - Assets/Materials
+  - Assets/Prefabs/LevelElements
   m_LastFoldersGridSize: 16
   m_LastProjectPath: C:\Users\camde\Documents\GitHub\ld52spidergame
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 0}
-    m_SelectedIDs: ae7a0000
-    m_LastClickedID: 31406
+    m_SelectedIDs: 007d0000
+    m_LastClickedID: 32000
     m_ExpandedIDs: 00000000a27a0000a47a0000a67a0000a87a0000aa7a0000ac7a0000ae7a0000b07a0000547c000000ca9a3b
     m_RenameOverlay:
       m_UserAcceptedRename: 0
