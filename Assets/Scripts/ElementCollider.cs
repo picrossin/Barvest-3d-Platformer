@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 [RequireComponent(typeof(BoxCollider))]
 public class ElementCollider : MonoBehaviour
 {
+    [SerializeField] private float m_TrampolineForce = 7.5f;
+
     private bool m_Died = false;
     private bool m_SpeedChanged = false;
     private float m_OriginalMaxSpeed;
@@ -24,6 +26,14 @@ public class ElementCollider : MonoBehaviour
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
 
+        // Puddle Layer collider
+        if (other.gameObject.layer == 4 && !m_SpeedChanged)
+        {
+            Debug.Log("Halve Speed!");
+            m_SpeedChanged = true;
+            GetComponentInParent<PlayerController>().MaxSpeed = m_OriginalMaxSpeed / 2;
+        }
+
         // Cobweb Layer collider
         if (other.gameObject.layer == 7 && !m_SpeedChanged)
         {
@@ -32,12 +42,12 @@ public class ElementCollider : MonoBehaviour
             GetComponentInParent<PlayerController>().MaxSpeed = m_OriginalMaxSpeed * 2;
         }
 
-        // Cobweb Layer collider
-        if (other.gameObject.layer == 8 && !m_SpeedChanged)
+        // Trampoline layer collider
+        if (other.gameObject.layer == 8)
         {
-            Debug.Log("Halve Speed!");
-            m_SpeedChanged = true;
-            GetComponentInParent<PlayerController>().MaxSpeed = m_OriginalMaxSpeed / 2;
+            Rigidbody parentRigidbody = GetComponentInParent<Rigidbody>();
+            parentRigidbody.AddForce(Vector3.up * m_TrampolineForce, ForceMode.Impulse);
+            GetComponentInParent<PlayerController>().DoubleJumped = false;
         }
 
         // Collectible layer collider
@@ -49,7 +59,7 @@ public class ElementCollider : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.gameObject.layer == 7 || other.gameObject.layer == 8)
+        if (other.gameObject.layer == 7 || other.gameObject.layer == 4)
         {
             Debug.Log("Reset Speed!");
             m_SpeedChanged = false;

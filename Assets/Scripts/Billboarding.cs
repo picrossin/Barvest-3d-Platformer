@@ -22,8 +22,11 @@ public class Billboarding : MonoBehaviour
         cameraDirection.y = 0;
         transform.rotation = Quaternion.LookRotation(cameraDirection);
 
-        // Move the billboarding object up and down slightly
-        float newY = Mathf.Sin(Time.time * m_Speed) * m_Height + m_InitialPosition.y;
-        transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+        if (m_MoveUpAndDown)
+        {
+            // Move the billboarding object up and down slightly
+            float newY = Mathf.Sin(Time.time * m_Speed) * m_Height + m_InitialPosition.y;
+            transform.position = new Vector3(transform.position.x, newY, transform.position.z);
+        }
     }
 }

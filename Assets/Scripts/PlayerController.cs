@@ -38,6 +38,11 @@ public class PlayerController : MonoBehaviour
     private Vector3 m_SlopeNormal;
 
     private bool m_DoubleJumped;
+    public bool DoubleJumped
+    {
+        get => m_DoubleJumped;
+        set => m_DoubleJumped = value;
+    }
     
     private bool m_Wrapping;
     private BasicEnemy m_WrappingEnemy;
