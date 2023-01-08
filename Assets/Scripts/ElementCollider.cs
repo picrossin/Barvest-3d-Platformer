@@ -10,6 +10,7 @@ public class ElementCollider : MonoBehaviour
 
     private bool m_Died = false;
     private bool m_SpeedChanged = false;
+    private bool m_ApplyingTrampolineForce = false;
     private float m_OriginalMaxSpeed;
 
     void Start()
@@ -43,8 +44,9 @@ public class ElementCollider : MonoBehaviour
         }
 
         // Trampoline layer collider
-        if (other.gameObject.layer == 8)
+        if (other.gameObject.layer == 8 && !m_ApplyingTrampolineForce)
         {
+            m_ApplyingTrampolineForce = true;
             Rigidbody parentRigidbody = GetComponentInParent<Rigidbody>();
             parentRigidbody.AddForce(Vector3.up * m_TrampolineForce, ForceMode.Impulse);
             GetComponentInParent<PlayerController>().DoubleJumped = false;
@@ -64,6 +66,11 @@ public class ElementCollider : MonoBehaviour
             Debug.Log("Reset Speed!");
             m_SpeedChanged = false;
             GetComponentInParent<PlayerController>().MaxSpeed = m_OriginalMaxSpeed;
+        }
+
+        if (other.gameObject.layer == 8)
+        {
+            m_ApplyingTrampolineForce = false;
         }
     }
 }
