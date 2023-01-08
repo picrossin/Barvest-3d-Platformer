@@ -19,6 +19,20 @@ public class BasicEnemy : MonoBehaviour
         set => m_UnderAttack = value;
     }
 
+    private bool m_Wrapped;
+    public bool Wrapped
+    {
+        get => m_Wrapped;
+        set => m_Wrapped = value;
+    }
+    
+    private bool m_Eaten;
+    public bool Eaten
+    {
+        get => m_Eaten;
+        set => m_Eaten = value;
+    }
+
     private NavMeshAgent m_Enemy;
     private int m_CurrentDestinationIndex;
     private bool m_Turning = false;
@@ -39,6 +53,12 @@ public class BasicEnemy : MonoBehaviour
 
     void Update()
     {
+        if (m_Wrapped)
+        {
+            m_Enemy.speed = 0f;
+            return;
+        }
+        
         // Draw Debug Ray
         Vector3 forward = transform.TransformDirection(Vector3.forward) * 1;
         Debug.DrawRay(transform.position, forward, Color.green);
@@ -48,7 +68,8 @@ public class BasicEnemy : MonoBehaviour
         {
             Debug.Log("Under Attack!!!");
             m_Enemy.speed = m_UnderAttackSpeed;
-        } else if (!m_UnderAttack && m_Enemy.speed == m_UnderAttackSpeed)
+        } 
+        else if (!m_UnderAttack && m_Enemy.speed == m_UnderAttackSpeed)
         {
             Debug.Log("No Longer Under Attack, Yippee!!!");
             m_Enemy.speed = m_MoveSpeed;

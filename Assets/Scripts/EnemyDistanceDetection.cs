@@ -69,15 +69,31 @@ public class EnemyDistanceDetection : MonoBehaviour
         // If there are no enemies in range return null
         if (m_EnemiesInRange.Count == 0) return null;
         // If there is only one enemy in range return that enemy
-        if (m_EnemiesInRange.Count == 1) return m_EnemiesInRange[0];
+        if (m_EnemiesInRange.Count == 1)
+        {
+            if (m_EnemiesInRange[0] == null)
+            {
+                m_EnemiesInRange.RemoveAt(0);
+                return null;
+            }
+            
+            if (m_EnemiesInRange[0].GetComponent<BasicEnemy>().Eaten)
+                return null;
+            
+            return m_EnemiesInRange[0];
+        }
 
         Debug.Log("Getting closest enemy");
         // Set up base values for comparing against all other enemies in range
         GameObject closestEnemy = m_EnemiesInRange[0];
         float shortestDistance = Vector3.Distance(transform.position, closestEnemy.transform.position);
         // Loop through each enemy in range to find the one with shortest distance
-        foreach(GameObject enemy in m_EnemiesInRange)
+        m_EnemiesInRange.RemoveAll(e => e == null);
+        foreach (GameObject enemy in m_EnemiesInRange)
         {
+            if (enemy.GetComponent<BasicEnemy>().Eaten)
+                continue;
+            
             float distance = Vector3.Distance(transform.position, enemy.transform.position);
             if (distance < shortestDistance)
             {
