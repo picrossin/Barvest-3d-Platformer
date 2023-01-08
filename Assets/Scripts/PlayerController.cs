@@ -30,6 +30,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody m_Rigidbody;
     private Collider m_Collider;
     private EnemyDistanceDetection m_EnemyDistanceDetection;
+    private GrappleDistanceDetection m_GrappleDistanceDetection;
     private Cinemachine3rdPersonFollow m_ThirdPersonCam;
     private LineRenderer m_WebLineRenderer;
 
@@ -45,11 +46,16 @@ public class PlayerController : MonoBehaviour
     private float[] m_WrapAngles = { 45f, 90f, 135f, 180f, -135f, -90f, -45f, 0f, 45f, 90f, 135f, 180f, -135f, -90f, -45f};
     private int m_CurrentAngle = 7;
 
+    private bool m_Grappling;
+    private GameObject m_GrapplePoint;
+    private HingeJoint m_Hinge;
+
     private void Start()
     {
         m_Rigidbody = GetComponent<Rigidbody>();
         m_Collider = GetComponent<Collider>();
         m_EnemyDistanceDetection = GetComponentInChildren<EnemyDistanceDetection>();
+        m_GrappleDistanceDetection = GetComponentInChildren<GrappleDistanceDetection>();
         m_ThirdPersonCam = m_ThirdPersonVirtualCam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
         m_ThirdPersonCam.CameraDistance = m_CameraFollowDistance;
     }
@@ -79,7 +85,6 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        Debug.Log(m_EnemyDistanceDetection);
         // Shoot web
         if (m_EnemyDistanceDetection.ClosestEnemy != null && Input.GetMouseButtonDown(0) && !m_Wrapping)
         {
@@ -128,6 +133,20 @@ public class PlayerController : MonoBehaviour
             {
                 Wrapped();
             }
+        }
+        
+        // Shoot grapple web
+        if (m_GrappleDistanceDetection.ClosestGrapple != null && Input.GetMouseButtonDown(0) && !m_Grappling)
+        {
+            m_Grappling = true;
+            m_GrapplePoint = m_GrappleDistanceDetection.ClosestGrapple;
+            
+            m_WebLineRenderer = Instantiate(m_WebLine, Vector3.zero, Quaternion.identity).GetComponent<LineRenderer>();
+
+            m_Hinge = gameObject.AddComponent<HingeJoint>();
+            m_Hinge.connectedBody = m_GrapplePoint.GetComponent<Rigidbody>();
+            m_Hinge.anchor = transform.InverseTransformPoint(m_GrapplePoint.transform.position);
+            m_Hinge.axis = new Vector3(m_Rigidbody.velocity.x, 0, m_Rigidbody.velocity.z).normalized;
         }
     }
     
