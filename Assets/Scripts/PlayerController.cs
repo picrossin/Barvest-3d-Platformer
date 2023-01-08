@@ -11,6 +11,11 @@ public class PlayerController : MonoBehaviour
     
     [Header("Settings")]
     [SerializeField] private float m_MaxSpeed = 2f;
+    public float MaxSpeed
+    {
+        get => m_MaxSpeed;
+        set => m_MaxSpeed = value;
+    }
     [SerializeField] private float m_Accel = 2f;
     [SerializeField] private float m_TurnAnimSpeed = 2f;
     [SerializeField] private float m_TurnAnimSpeedFast = 2f;
@@ -83,7 +88,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Clamp movement speed
-        float desiredSpeed = m_MaxSpeed;
+        float desiredSpeed = MaxSpeed;
 
         Vector3 desiredVelocity = relativeInput * desiredSpeed;
         Vector3 rbVel = m_Rigidbody.velocity;

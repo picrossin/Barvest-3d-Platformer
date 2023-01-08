@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(SphereCollider))]
-public class EnemyCollisionDetection : MonoBehaviour
+public class EnemyDistanceDetection : MonoBehaviour
 {
     // Editor Values
     [SerializeField] private float m_ColliderDistance;
@@ -45,7 +45,6 @@ public class EnemyCollisionDetection : MonoBehaviour
 
         if (closestEnemy != m_ClosestEnemy)
         {
-            Debug.Log("Closest enemy changed");
             IndicateClosestEnemy(m_ClosestEnemy, closestEnemy);
             m_ClosestEnemy = closestEnemy;
         }
