@@ -73,7 +73,10 @@ public class PlayerController : MonoBehaviour
     
     private void Update()
     {
-        m_Input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        if (GameplayManager.Instance.Started)
+            m_Input = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical")).normalized;
+        else
+            return;
 
         // Jumping
         if (Input.GetKeyDown(KeyCode.Space))

@@ -1666,6 +1666,11 @@ PrefabInstance:
       propertyPath: m_Player
       value: 
       objectReference: {fileID: 8810508967395876870}
+    - target: {fileID: 7843167055812701797, guid: c002bc40ae192b44ba9482bc5f6e40d5,
+        type: 3}
+      propertyPath: m_StartScreenSpinSpeed
+      value: 8
+      objectReference: {fileID: 0}
     - target: {fileID: 7843167055812701799, guid: c002bc40ae192b44ba9482bc5f6e40d5,
         type: 3}
       propertyPath: m_Name

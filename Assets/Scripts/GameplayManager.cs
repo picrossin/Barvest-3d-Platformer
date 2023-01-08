@@ -4,6 +4,9 @@ public class GameplayManager : MonoBehaviour
 {
     public static GameplayManager Instance { get; set; }
 
+    private bool m_Started;
+    public bool Started => m_Started;
+
     private int m_TotalEnemies;
     private int m_EnemiesCollected;
 
@@ -38,5 +41,10 @@ public class GameplayManager : MonoBehaviour
         {
             Debug.Log("YOU WIN!!!!!!");
         }
+    }
+
+    public void StartGame()
+    {
+        m_Started = true;
     }
 }

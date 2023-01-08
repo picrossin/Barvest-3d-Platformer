@@ -6,6 +6,7 @@ public class CameraController : MonoBehaviour
 	[SerializeField] private Transform m_Player;
 	[SerializeField] private float m_LookSensitivity = 1f;
 	[SerializeField] private float m_CameraVerticalFollowOffset = 0.25f;
+	[SerializeField] private float m_StartScreenSpinSpeed = 2f;
 
 	public Transform FollowObject { get; set; }
 	
@@ -19,6 +20,11 @@ public class CameraController : MonoBehaviour
 	{
 		Vector2 input = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * 
 		                (Time.fixedDeltaTime * m_LookSensitivity);
+
+		if (!GameplayManager.Instance.Started)
+		{
+			input = new Vector2(1f, 0f) * (Time.fixedDeltaTime * m_StartScreenSpinSpeed);
+		}
 
 		Vector3 angles = transform.localEulerAngles;
 		
