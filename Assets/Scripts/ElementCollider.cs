@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class ElementCollider : MonoBehaviour
 {
     [SerializeField] private float m_TrampolineForce = 7.5f;
+    [SerializeField] private Vector3 _respawnCoordinates;
 
     private bool m_Died = false;
     private bool m_SpeedChanged = false;
@@ -16,6 +17,7 @@ public class ElementCollider : MonoBehaviour
     void Start()
     {
         m_OriginalMaxSpeed = GetComponentInParent<PlayerController>().MaxSpeed;
+        GameplayManager.Instance.Respawn.SetRespawnPoint(transform.position);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -23,8 +25,10 @@ public class ElementCollider : MonoBehaviour
         // Ouch Layer collider
         if (other.gameObject.layer == 6 && !m_Died)
         {
-            m_Died = true;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            // m_Died = true;
+            Debug.Log("Spider death :(");
+            
+            GameplayManager.Instance.Respawn.Respawn(transform.parent);
         }
 
         // Puddle Layer collider
@@ -57,6 +61,14 @@ public class ElementCollider : MonoBehaviour
         {
             Debug.Log("Increase Collectible Score!");
             Destroy(other.gameObject);
+        }
+
+        // Checkpoint layer collider
+        if (other.gameObject.layer == 10)
+        {
+            Debug.Log("Checkpoint!");
+            GameplayManager.Instance.Respawn.SetRespawnPoint(
+               other.transform.position);
         }
     }
     private void OnTriggerExit(Collider other)

@@ -1,5 +1,7 @@
+using System.Collections;
 using Cinemachine;
 using UnityEngine;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(Rigidbody))]
 public class PlayerController : MonoBehaviour
@@ -28,6 +30,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_Friction = 1f;
     [SerializeField] private float m_CameraFollowDistance = 3f;
     [SerializeField] private float m_GrappleExtraForce = 3f;
+    [SerializeField] private float m_EnemySwallowSpeed = 0.05f;
 
     private Rigidbody m_Rigidbody;
     private Collider m_Collider;
@@ -50,8 +53,9 @@ public class PlayerController : MonoBehaviour
     private bool m_Wrapping;
     private BasicEnemy m_WrappingEnemy;
     private float m_WrapStartAngle;
-    private float[] m_WrapAngles = { 45f, 90f, 135f, 180f, -135f, -90f, -45f, 0f, 45f, 90f, 135f, 180f, -135f, -90f, -45f};
-    private int m_CurrentAngle = 7;
+    private bool m_WrapDirectionChosen;
+    private bool m_WrappingClockwise;
+    private float m_WrappedAmount;
 
     private bool m_Grappling;
     private GameObject m_GrapplePoint;
@@ -95,15 +99,25 @@ public class PlayerController : MonoBehaviour
         // Shoot web
         if (m_EnemyDistanceDetection.ClosestEnemy != null && Input.GetMouseButtonDown(0) && !m_Wrapping)
         {
-            m_Wrapping = true;
-            m_CameraRig.FollowObject = m_EnemyDistanceDetection.ClosestEnemy.transform;
             m_WrappingEnemy = m_EnemyDistanceDetection.ClosestEnemy.GetComponent<BasicEnemy>();
-            m_WrappingEnemy.UnderAttack = true;
-            
-            Vector3 diff = transform.position - m_WrappingEnemy.transform.position;
-            m_WrapStartAngle = Mathf.Atan2(diff.x, diff.z);
 
-            m_WebLineRenderer = Instantiate(m_WebLine, Vector3.zero, Quaternion.identity).GetComponent<LineRenderer>();
+            if (m_WrappingEnemy.Wrapped)
+            {
+                Debug.Log("Enemy eaten");
+                m_WrappingEnemy.Eaten = true;
+                StartCoroutine(EatEnemy(m_WrappingEnemy.gameObject));
+            }
+            else
+            {
+                m_WrappingEnemy.UnderAttack = true;
+                m_Wrapping = true;
+                m_CameraRig.FollowObject = m_EnemyDistanceDetection.ClosestEnemy.transform;
+            
+                Vector3 diff = transform.position - m_WrappingEnemy.transform.position;
+                m_WrapStartAngle = Mathf.Atan2(diff.x, diff.z);
+
+                m_WebLineRenderer = Instantiate(m_WebLine, Vector3.zero, Quaternion.identity).GetComponent<LineRenderer>();
+            }
         }
 
         // Wrap web
@@ -120,29 +134,59 @@ public class PlayerController : MonoBehaviour
             Vector3 diff = transform.position - m_WrappingEnemy.transform.position;
             float currentDegree = (m_WrapStartAngle - Mathf.Atan2(diff.x, diff.z)) * Mathf.Rad2Deg;
 
-            Debug.Log($"Current angle: {currentDegree}");
-            
-            if (Mathf.Abs(m_WrapAngles[m_CurrentAngle + 1] - currentDegree) <= 20f)
+            // 1. Detect direction of wrap
+            if (!m_WrapDirectionChosen)
             {
-                Debug.Log($"Reached angle: {m_WrapAngles[m_CurrentAngle + 1]}");
-                m_CurrentAngle++;
-                if (m_CurrentAngle == m_WrapAngles.Length - 1)
+                if (currentDegree > 30f) // Wrapping counter-clockwise ("right")
                 {
-                    Wrapped();
+                    m_WrapDirectionChosen = true;
+                    m_WrappingClockwise = false;
+                }
+                else if (currentDegree < -30f) // Wrapping clockwise ("left")
+                {
+                    m_WrapDirectionChosen = true;
+                    m_WrappingClockwise = true;
                 }
             }
-            else if (Mathf.Abs(m_WrapAngles[m_CurrentAngle - 1] - currentDegree) <= 20f)
+            else
             {
-                Debug.Log($"Reached angle: {m_WrapAngles[m_CurrentAngle - 1]}");
-                m_CurrentAngle--;
-                if (m_CurrentAngle == 0)
+                // 2. Track wrapping amount around chosen direction
+                if (!m_WrappingClockwise)
                 {
-                    Wrapped();
+                    // Ensure angles are between 0 - 360 degrees
+                    if (currentDegree < 0f)
+                    {
+                        currentDegree += 360f;
+                    }
                 }
-            } 
-            else if (Input.GetMouseButtonUp(0))
+                else
+                {
+                    // Ensure angles are between -1 - -360 degrees
+                    if (currentDegree > 0f)
+                    {
+                        currentDegree -= 360f;
+                    }
+
+                    currentDegree = -currentDegree; // Flip sign to be positive
+                }
+                
+                m_WrappedAmount = currentDegree / 340f;
+
+                if (currentDegree > 340f)
+                {
+                    m_WrappingEnemy.Wrapped = true;
+                    ResetWrapped();
+                }
+
+                if (currentDegree < 20f)
+                {
+                    ResetWrapped();
+                }
+            }
+            
+            if (Input.GetMouseButtonUp(0))
             {
-                Wrapped();
+                ResetWrapped();
             }
         }
         
@@ -250,14 +294,32 @@ public class PlayerController : MonoBehaviour
             0.3f, m_GroundLayerMask);
     }
 
-    private void Wrapped()
+    private void ResetWrapped()
     {
-        m_CurrentAngle = 7;
         m_Wrapping = false;
+        m_WrapDirectionChosen = false;
         m_CameraRig.FollowObject = null;
         m_WrappingEnemy.UnderAttack = false;
         m_WrappingEnemy = null;
         m_ThirdPersonCam.CameraDistance = m_CameraFollowDistance;
         Destroy(m_WebLineRenderer.gameObject);
+    }
+
+    private IEnumerator EatEnemy(GameObject enemy)
+    {
+        enemy.GetComponent<NavMeshAgent>().enabled = false;
+
+        m_WebLineRenderer = Instantiate(m_WebLine, Vector3.zero, Quaternion.identity).GetComponent<LineRenderer>();
+
+        while (Vector3.Distance(enemy.transform.position, transform.position) > 0.5f)
+        {
+            m_WebLineRenderer.SetPositions(new[] {transform.position + Vector3.up * 0.2f, enemy.transform.position});
+
+            enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, transform.position, m_EnemySwallowSpeed);
+            yield return new WaitForEndOfFrame();
+        }
+
+        Destroy(m_WebLineRenderer.gameObject);
+        Destroy(enemy);
     }
 }
