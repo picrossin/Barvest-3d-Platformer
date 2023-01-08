@@ -17,6 +17,7 @@ public class ElementCollider : MonoBehaviour
     void Start()
     {
         m_OriginalMaxSpeed = GetComponentInParent<PlayerController>().MaxSpeed;
+        GameplayManager.Instance.Respawn.SetRespawnPoint(transform.position);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -24,8 +25,10 @@ public class ElementCollider : MonoBehaviour
         // Ouch Layer collider
         if (other.gameObject.layer == 6 && !m_Died)
         {
-            m_Died = true;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            // m_Died = true;
+            Debug.Log("Spider death :(");
+            
+            GameplayManager.Instance.Respawn.Respawn(transform.parent);
         }
 
         // Puddle Layer collider
@@ -64,7 +67,8 @@ public class ElementCollider : MonoBehaviour
         if (other.gameObject.layer == 10)
         {
             Debug.Log("Checkpoint!");
-            GameplayManager.Instance.Respawn.SetRespawnPoint(_respawnCoordinates);
+            GameplayManager.Instance.Respawn.SetRespawnPoint(
+               other.transform.position);
         }
     }
     private void OnTriggerExit(Collider other)
