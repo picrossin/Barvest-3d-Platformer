@@ -39,6 +39,13 @@ public class ElementCollider : MonoBehaviour
             m_SpeedChanged = true;
             GetComponentInParent<PlayerController>().MaxSpeed = m_OriginalMaxSpeed / 2;
         }
+
+        // Collectible layer collider
+        if (other.gameObject.layer == 9)
+        {
+            Debug.Log("Increase Collectible Score!");
+            Destroy(other.gameObject);
+        }
     }
     private void OnTriggerExit(Collider other)
     {
