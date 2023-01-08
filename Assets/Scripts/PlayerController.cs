@@ -47,14 +47,6 @@ public class PlayerController : MonoBehaviour
         set => m_DoubleJumped = value;
     }
 
-    private bool m_MoveAlternate;
-
-    public bool MoveAlternate
-    {
-        get => m_MoveAlternate;
-        set => m_MoveAlternate = value;
-    }
-
     private bool m_Wrapping;
     private BasicEnemy m_WrappingEnemy;
     private float m_WrapStartAngle;
