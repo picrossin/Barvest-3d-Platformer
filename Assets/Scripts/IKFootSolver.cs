@@ -11,8 +11,6 @@ public class IKFootSolver : MonoBehaviour
     [SerializeField] float stepDistance;
     [SerializeField] float speed;
     [SerializeField] float stepHeight;
-    [SerializeField] bool alternateGroup;
-    [SerializeField] bool leader;
     [SerializeField] float airSmoothing = 1f;
 
     Vector3 newPosition;
@@ -23,6 +21,8 @@ public class IKFootSolver : MonoBehaviour
     Vector3 airPosition;
 
     PlayerController player;
+    Platform platform;
+    private Vector3 platformOffset;
     
     // Start is called before the first frame update
     void Start()
@@ -37,6 +37,11 @@ public class IKFootSolver : MonoBehaviour
     {
         if (player.Grounded())
         {
+            if (platform != null)
+            {
+                newPosition = platform.transform.position + platformOffset;
+            }
+            
             transform.position = currentPosition;
 
             Ray ray = new Ray(body.position + (body.right * footSpacing) + (body.forward * footOffset) + (body.up * 0.1f), Vector3.down);
@@ -49,10 +54,17 @@ public class IKFootSolver : MonoBehaviour
                     lerp = 0;
                     newPosition = info.point;
 
-                    if (leader)
-                        player.MoveAlternate = !player.MoveAlternate;
+                    platform = null;
+
+                    if (info.transform.TryGetComponent(out Platform newPlatform))
+                    {
+                        Debug.Log("on platform");
+                        platform = newPlatform;
+                        platformOffset = newPosition - platform.transform.position;
+                    }
                 }
             }
+            
             if (lerp < 1)
             {
                 Vector3 footPosition = Vector3.Lerp(oldPosition, newPosition, lerp);
