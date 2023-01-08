@@ -3,18 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
 
-[CustomEditor(typeof(BasicEnemy))]
-public class BasicEnemyEditor : Editor
+[CustomEditor(typeof(Platform))]
+public class PlatformEditor : Editor
 {
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
 
-        BasicEnemy myBasicEnemy = (BasicEnemy)target;
+        Platform myPlatform = (Platform)target;
         if (GUILayout.Button("Add Position To Path"))
         {
-            myBasicEnemy.AddPositionToPath();
+            myPlatform.AddPositionToPath();
             EditorUtility.SetDirty(target);
         }
     }
 }
+
