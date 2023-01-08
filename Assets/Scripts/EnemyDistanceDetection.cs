@@ -10,7 +10,7 @@ public class EnemyDistanceDetection : MonoBehaviour
     [SerializeField] private Material m_SecondMaterial;
     [SerializeField] private RectTransform m_CanvasRect;
     [SerializeField] private RectTransform m_WebIcon;
-
+    
     // Private Values
     private GameObject m_ClosestEnemy;
     public GameObject ClosestEnemy => m_ClosestEnemy;
