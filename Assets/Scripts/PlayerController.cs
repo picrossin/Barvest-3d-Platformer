@@ -29,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
     private Rigidbody m_Rigidbody;
     private Collider m_Collider;
-    private EnemyCollisionDetection m_EnemyCollisionDetection;
+    private EnemyDistanceDetection m_EnemyDistanceDetection;
     private Cinemachine3rdPersonFollow m_ThirdPersonCam;
     private LineRenderer m_WebLineRenderer;
 
@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour
     {
         m_Rigidbody = GetComponent<Rigidbody>();
         m_Collider = GetComponent<Collider>();
-        m_EnemyCollisionDetection = GetComponent<EnemyCollisionDetection>();
+        m_EnemyDistanceDetection = GetComponentInChildren<EnemyDistanceDetection>();
         m_ThirdPersonCam = m_ThirdPersonVirtualCam.GetCinemachineComponent<Cinemachine3rdPersonFollow>();
         m_ThirdPersonCam.CameraDistance = m_CameraFollowDistance;
     }
@@ -78,13 +78,14 @@ public class PlayerController : MonoBehaviour
                 m_Rigidbody.velocity = new Vector3(oldVel.x, 0f, oldVel.z);
             }
         }
-        
+
+        Debug.Log(m_EnemyDistanceDetection);
         // Shoot web
-        if (m_EnemyCollisionDetection.ClosestEnemy != null && Input.GetMouseButtonDown(0) && !m_Wrapping)
+        if (m_EnemyDistanceDetection.ClosestEnemy != null && Input.GetMouseButtonDown(0) && !m_Wrapping)
         {
             m_Wrapping = true;
-            m_CameraRig.FollowObject = m_EnemyCollisionDetection.ClosestEnemy.transform;
-            m_WrappingEnemy = m_EnemyCollisionDetection.ClosestEnemy.GetComponent<BasicEnemy>();
+            m_CameraRig.FollowObject = m_EnemyDistanceDetection.ClosestEnemy.transform;
+            m_WrappingEnemy = m_EnemyDistanceDetection.ClosestEnemy.GetComponent<BasicEnemy>();
             m_WrappingEnemy.UnderAttack = true;
             
             Vector3 diff = transform.position - m_WrappingEnemy.transform.position;
