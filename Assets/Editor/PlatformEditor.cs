@@ -14,6 +14,7 @@ public class PlatformEditor : Editor
         if (GUILayout.Button("Add Position To Path"))
         {
             myPlatform.AddPositionToPath();
+            EditorUtility.SetDirty(target);
         }
     }
 }

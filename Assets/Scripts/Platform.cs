@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Platform : MonoBehaviour
 {
-    [SerializeField] private List<Vector3> m_Waypoints = new List<Vector3>();
+    [SerializeField] private List<Vector3> m_Waypoints;
     [SerializeField] private float m_Speed;
 
     // Variables for time passed
@@ -28,7 +28,7 @@ public class Platform : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         m_ElapsedTime += Time.deltaTime;
 

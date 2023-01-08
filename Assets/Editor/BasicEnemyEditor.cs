@@ -14,6 +14,7 @@ public class BasicEnemyEditor : Editor
         if (GUILayout.Button("Add Position To Path"))
         {
             myBasicEnemy.AddPositionToPath();
+            EditorUtility.SetDirty(target);
         }
     }
 }
