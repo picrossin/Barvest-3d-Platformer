@@ -53,8 +53,6 @@ MonoBehaviour:
   stepDistance: 0.3
   speed: 5
   stepHeight: 0.125
-  alternateGroup: 0
-  leader: 1
   airSmoothing: 0.1
 --- !u!1 &169811495
 GameObject:
@@ -109,8 +107,6 @@ MonoBehaviour:
   stepDistance: 0.3
   speed: 0.4
   stepHeight: 0.125
-  alternateGroup: 1
-  leader: 0
   airSmoothing: 0.1
 --- !u!1 &318280253
 GameObject:
@@ -223,8 +219,6 @@ MonoBehaviour:
   stepDistance: 0.34
   speed: 0.4
   stepHeight: 0.125
-  alternateGroup: 1
-  leader: 0
   airSmoothing: 0.1
 --- !u!1 &418528568
 GameObject:
@@ -461,8 +455,6 @@ MonoBehaviour:
   stepDistance: 0.3
   speed: 0.4
   stepHeight: 0.125
-  alternateGroup: 0
-  leader: 0
   airSmoothing: 0.1
 --- !u!1 &924782288
 GameObject:
@@ -575,8 +567,6 @@ MonoBehaviour:
   stepDistance: 0.34
   speed: 0.4
   stepHeight: 0.125
-  alternateGroup: 1
-  leader: 0
   airSmoothing: 0.1
 --- !u!1 &1035221738
 GameObject:
@@ -693,8 +683,6 @@ MonoBehaviour:
   stepDistance: 0.3
   speed: 0.4
   stepHeight: 0.125
-  alternateGroup: 1
-  leader: 1
   airSmoothing: 0.1
 --- !u!1 &1433011421
 GameObject:
@@ -879,6 +867,7 @@ MonoBehaviour:
   m_SecondMaterial: {fileID: 2100000, guid: 75575fa0650068f4ca96ed661b880614, type: 2}
   m_CanvasRect: {fileID: 0}
   m_WebIcon: {fileID: 0}
+  m_EnemyDetection: {fileID: 2531120863815018318}
 --- !u!1 &1617184304
 GameObject:
   m_ObjectHideFlags: 0
@@ -932,8 +921,6 @@ MonoBehaviour:
   stepDistance: 0.3
   speed: 0.4
   stepHeight: 0.125
-  alternateGroup: 0
-  leader: 0
   airSmoothing: 0.1
 --- !u!1 &1642674948
 GameObject:
@@ -988,8 +975,6 @@ MonoBehaviour:
   stepDistance: 0.3
   speed: 0.4
   stepHeight: 0.125
-  alternateGroup: 0
-  leader: 0
   airSmoothing: 0.1
 --- !u!1 &1767356515
 GameObject:
@@ -1446,6 +1431,18 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 722193091515009667}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2531120863815018318 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2965030783216545229, guid: 8101463ca55e7de44ad9c71b3746e768,
+    type: 3}
+  m_PrefabInstance: {fileID: 722193091515009667}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: eaec16867f1ba5a4393a8d5a8eabc183, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &3167222652951638768 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2445880051606943859, guid: 8101463ca55e7de44ad9c71b3746e768,

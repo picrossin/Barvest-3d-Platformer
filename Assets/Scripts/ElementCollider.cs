@@ -60,6 +60,7 @@ public class ElementCollider : MonoBehaviour
         if (other.gameObject.layer == 9)
         {
             Debug.Log("Increase Collectible Score!");
+            GameplayManager.Instance.CollectCoin();
             Destroy(other.gameObject);
         }
 
