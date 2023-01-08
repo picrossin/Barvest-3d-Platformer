@@ -172,13 +172,25 @@ public class PlayerController : MonoBehaviour
                 
                 m_WrappedAmount = currentDegree / 340f;
 
+                Debug.Log(Vector3.Distance(transform.position, m_WrappingEnemy.transform.position));
+                
                 if (currentDegree > 340f)
                 {
                     m_WrappingEnemy.Wrapped = true;
                     ResetWrapped();
+                } 
+                else if (currentDegree < 20f)
+                {
+                    ResetWrapped();
+                } 
+                else if (Vector3.Distance(transform.position, m_WrappingEnemy.transform.position) > 7f)
+                {
+                    ResetWrapped();
                 }
-
-                if (currentDegree < 20f)
+                else if (Physics.Raycast(transform.position + Vector3.up * 0.2f, 
+                    m_WrappingEnemy.transform.position - transform.position + Vector3.up * 0.2f, out RaycastHit hit, 
+                    Vector3.Distance(transform.position + Vector3.up * 0.2f, m_WrappingEnemy.transform.position),
+                    m_GroundLayerMask))
                 {
                     ResetWrapped();
                 }
@@ -321,5 +333,7 @@ public class PlayerController : MonoBehaviour
 
         Destroy(m_WebLineRenderer.gameObject);
         Destroy(enemy);
+        
+        GameplayManager.Instance.CollectEnemy();
     }
 }
