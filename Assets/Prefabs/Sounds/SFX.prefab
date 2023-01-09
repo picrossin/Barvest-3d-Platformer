@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3650618608065442505}
   - component: {fileID: 2837280720339096890}
   - component: {fileID: 3019098762863180827}
+  - component: {fileID: -3335948569843872263}
   m_Layer: 0
   m_Name: SFX
   m_TagString: Untagged
@@ -142,3 +143,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Secs: 3
+--- !u!114 &-3335948569843872263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8611469460725107380}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73df1b34995b49d49a0916dca5667e1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

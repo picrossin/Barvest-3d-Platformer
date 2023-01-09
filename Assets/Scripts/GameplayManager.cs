@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -12,6 +13,8 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private GameObject m_ButtonHoverSFX;
     [SerializeField] private GameObject m_ButtonClickSFX;
     [SerializeField] private GameObject m_BookSFX;
+    [SerializeField] private GameObject m_PillowCam;
+    [SerializeField] private GameObject m_SecretPillow;
     
     private bool m_Started;
     public bool Started => m_Started;
@@ -33,6 +36,9 @@ public class GameplayManager : MonoBehaviour
 
     private Stopwatch m_Stopwatch;
     public Stopwatch Stopwatch => m_Stopwatch;
+
+    private float m_Volume = 0.7f;
+    public float Volume => m_Volume;
 
     private void Awake()
     {
@@ -64,6 +70,11 @@ public class GameplayManager : MonoBehaviour
         m_EnemiesCollected++;
         
         m_Hud.SetStomachFill((float)m_EnemiesCollected / m_TotalEnemies);
+
+        if (m_EnemiesCollected == m_TotalEnemies - 1) // All but the boss
+        {
+            StartCoroutine(PillowCutscene());
+        }
         
         if (m_EnemiesCollected >= m_TotalEnemies)
         {
@@ -106,7 +117,7 @@ public class GameplayManager : MonoBehaviour
         m_Stopwatch.Unpause();
         m_CanvasAnimation.Play("BookOut");
         m_BookOpen = false;
-        Instantiate(m_BookSFX).GetComponent<AudioSource>().pitch -= 0.7f;
+        Instantiate(m_BookSFX).GetComponent<AudioSource>().pitch -= 0.07f;
 
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -127,10 +138,23 @@ public class GameplayManager : MonoBehaviour
         Instantiate(m_ButtonClickSFX);
     }
 
+    public void SetVolume(Slider vol)
+    {
+        m_Volume = vol.value;
+    }
+
     private IEnumerator CloseBookWait()
     {
         m_CanCloseBook = false;
         yield return new WaitForSeconds(0.5f);
         m_CanCloseBook = true;
+    }
+
+    private IEnumerator PillowCutscene()
+    {
+        m_PillowCam.SetActive(true);
+        m_SecretPillow.SetActive(true);
+        yield return new WaitForSeconds(4);
+        m_PillowCam.SetActive(false);
     }
 }

@@ -49,6 +49,14 @@ MonoBehaviour:
   m_CanvasAnimation: {fileID: 0}
   m_Hud: {fileID: 0}
   m_MusicManager: {fileID: 0}
+  m_ButtonHoverSFX: {fileID: 800701377599220084, guid: 2e465d0acb0a6b94c9df37869cd4290a,
+    type: 3}
+  m_ButtonClickSFX: {fileID: 800701377599220084, guid: 0b8941ba05aa7184e89fdf9f2702e8d3,
+    type: 3}
+  m_BookSFX: {fileID: 800701377599220084, guid: d873cd7afe44fe64bb558a60a911ffcd,
+    type: 3}
+  m_PillowCam: {fileID: 0}
+  m_SecretPillow: {fileID: 0}
 --- !u!114 &7819688167979512892
 MonoBehaviour:
   m_ObjectHideFlags: 0

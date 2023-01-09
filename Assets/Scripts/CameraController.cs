@@ -1,5 +1,6 @@
 using Unity.Mathematics;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CameraController : MonoBehaviour
 {
@@ -8,6 +9,9 @@ public class CameraController : MonoBehaviour
 	[SerializeField] private float m_CameraVerticalFollowOffset = 0.25f;
 	[SerializeField] private float m_StartScreenSpinSpeed = 2f;
 
+	private bool m_InvertX;
+	private bool m_InvertY;
+	
 	public Transform FollowObject { get; set; }
 	
 	private void LateUpdate()
@@ -15,7 +19,7 @@ public class CameraController : MonoBehaviour
 		if (GameplayManager.Instance.BookOpen)
 			return;
 		
-		Vector2 input = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * 
+		Vector2 input = new Vector2((m_InvertX ? -1f : 1f) * Input.GetAxis("Mouse X"), (m_InvertY ? -1f : 1f) * Input.GetAxis("Mouse Y")) * 
 		                (Time.fixedDeltaTime * m_LookSensitivity);
 
 		if (!GameplayManager.Instance.Started)
@@ -75,4 +79,20 @@ public class CameraController : MonoBehaviour
 		    transform.position = FollowObject.position;
 	    }
     }
+
+	public void SetCameraSensitivity(Slider sensitivity)
+	{
+		Debug.Log($"Sensitivity: {sensitivity.value}");
+		m_LookSensitivity = sensitivity.value;
+	}
+
+	public void InvertX(Toggle val)
+	{
+		m_InvertX = val.isOn;
+	}
+	
+	public void InvertY(Toggle val)
+	{
+		m_InvertY = val.isOn;
+	}
 }

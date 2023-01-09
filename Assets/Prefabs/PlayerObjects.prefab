@@ -54,8 +54,7 @@ MonoBehaviour:
   speed: 5
   stepHeight: 0.125
   airSmoothing: 0.1
-  m_FootstepSFX: {fileID: 800701377599220084, guid: f20e54655e952034c9ffbc1884f1d704,
-    type: 3}
+  m_FootstepSFX: {fileID: 0}
 --- !u!1 &169811495
 GameObject:
   m_ObjectHideFlags: 0
@@ -462,8 +461,7 @@ MonoBehaviour:
   speed: 0.4
   stepHeight: 0.125
   airSmoothing: 0.1
-  m_FootstepSFX: {fileID: 800701377599220084, guid: f20e54655e952034c9ffbc1884f1d704,
-    type: 3}
+  m_FootstepSFX: {fileID: 0}
 --- !u!1 &924782288
 GameObject:
   m_ObjectHideFlags: 0
@@ -934,8 +932,7 @@ MonoBehaviour:
   speed: 0.4
   stepHeight: 0.125
   airSmoothing: 0.1
-  m_FootstepSFX: {fileID: 800701377599220084, guid: f20e54655e952034c9ffbc1884f1d704,
-    type: 3}
+  m_FootstepSFX: {fileID: 0}
 --- !u!1 &1642674948
 GameObject:
   m_ObjectHideFlags: 0
@@ -990,8 +987,7 @@ MonoBehaviour:
   speed: 0.4
   stepHeight: 0.125
   airSmoothing: 0.1
-  m_FootstepSFX: {fileID: 800701377599220084, guid: f20e54655e952034c9ffbc1884f1d704,
-    type: 3}
+  m_FootstepSFX: {fileID: 0}
 --- !u!1 &1767356515
 GameObject:
   m_ObjectHideFlags: 0
@@ -1329,9 +1325,19 @@ PrefabInstance:
     m_TransformParent: {fileID: 7086258347042751036}
     m_Modifications:
     - target: {fileID: 1323416563, guid: 8101463ca55e7de44ad9c71b3746e768, type: 3}
+      propertyPath: m_JumpSFX
+      value: 
+      objectReference: {fileID: 800701377599220084, guid: 07f37d49eef5d2b4dbc0a44585d59d3c,
+        type: 3}
+    - target: {fileID: 1323416563, guid: 8101463ca55e7de44ad9c71b3746e768, type: 3}
       propertyPath: m_WebLine
       value: 
       objectReference: {fileID: 927085927424494950, guid: b3e4428b0afa33e4db4f262a22409da1,
+        type: 3}
+    - target: {fileID: 1323416563, guid: 8101463ca55e7de44ad9c71b3746e768, type: 3}
+      propertyPath: m_ChompSFX
+      value: 
+      objectReference: {fileID: 800701377599220084, guid: 9f4d6ca4283280443a24b3b9a6cb11dd,
         type: 3}
     - target: {fileID: 1323416563, guid: 8101463ca55e7de44ad9c71b3746e768, type: 3}
       propertyPath: m_MaxSpeed
@@ -1341,6 +1347,16 @@ PrefabInstance:
       propertyPath: m_CameraRig
       value: 
       objectReference: {fileID: 9065621000220998189}
+    - target: {fileID: 1323416563, guid: 8101463ca55e7de44ad9c71b3746e768, type: 3}
+      propertyPath: m_WrappedSFX
+      value: 
+      objectReference: {fileID: 800701377599220084, guid: 6103cb78d5d9c1542ab948b90515725e,
+        type: 3}
+    - target: {fileID: 1323416563, guid: 8101463ca55e7de44ad9c71b3746e768, type: 3}
+      propertyPath: m_WebSplatSFX
+      value: 
+      objectReference: {fileID: 800701377599220084, guid: 598e4cd2c3f96334ba5373d5d2b01525,
+        type: 3}
     - target: {fileID: 1323416563, guid: 8101463ca55e7de44ad9c71b3746e768, type: 3}
       propertyPath: m_FullCocoonMat
       value: 
@@ -1361,6 +1377,30 @@ PrefabInstance:
       propertyPath: m_Radius
       value: 0.05
       objectReference: {fileID: 0}
+    - target: {fileID: 910004696880957815, guid: 8101463ca55e7de44ad9c71b3746e768,
+        type: 3}
+      propertyPath: m_CoinSound
+      value: 
+      objectReference: {fileID: 800701377599220084, guid: f533a1760038e394595903aae7d99720,
+        type: 3}
+    - target: {fileID: 910004696880957815, guid: 8101463ca55e7de44ad9c71b3746e768,
+        type: 3}
+      propertyPath: m_JumpSound
+      value: 
+      objectReference: {fileID: 800701377599220084, guid: 07f37d49eef5d2b4dbc0a44585d59d3c,
+        type: 3}
+    - target: {fileID: 910004696880957815, guid: 8101463ca55e7de44ad9c71b3746e768,
+        type: 3}
+      propertyPath: m_OuchSound
+      value: 
+      objectReference: {fileID: 800701377599220084, guid: e54c94027556da34dbab278f6e504c7c,
+        type: 3}
+    - target: {fileID: 910004696880957815, guid: 8101463ca55e7de44ad9c71b3746e768,
+        type: 3}
+      propertyPath: m_CheckpointSound
+      value: 
+      objectReference: {fileID: 800701377599220084, guid: 86449245913e0764ab5a18b7c320e39f,
+        type: 3}
     - target: {fileID: 8088616610127424133, guid: 8101463ca55e7de44ad9c71b3746e768,
         type: 3}
       propertyPath: m_RootOrder
@@ -1918,6 +1958,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_LevelMusic: {fileID: 8300000, guid: 910d3ff97479b3d4d89520df8616285b, type: 3}
+--- !u!114 &8756925240709786791
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9065621000615085671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 73df1b34995b49d49a0916dca5667e1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &9065621000615085674 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6757818577451648197, guid: f22e48cb01cf5f14fb35da8ddfcd9d48,
