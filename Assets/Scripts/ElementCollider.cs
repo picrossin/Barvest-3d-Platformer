@@ -55,7 +55,10 @@ public class ElementCollider : MonoBehaviour
         {
             m_ApplyingTrampolineForce = true;
             Rigidbody parentRigidbody = GetComponentInParent<Rigidbody>();
-            parentRigidbody.AddForce(Vector3.up * m_TrampolineForce, ForceMode.Impulse);
+
+            float force = other.gameObject.name == "SuperTramp" ? m_TrampolineForce * 3f : m_TrampolineForce;
+            
+            parentRigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
             GetComponentInParent<PlayerController>().DoubleJumped = false;
         }
 
