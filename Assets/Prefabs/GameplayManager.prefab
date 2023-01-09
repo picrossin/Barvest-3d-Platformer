@@ -47,6 +47,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CanvasAnimation: {fileID: 0}
+  m_Hud: {fileID: 0}
+  m_MusicManager: {fileID: 0}
 --- !u!114 &7819688167979512892
 MonoBehaviour:
   m_ObjectHideFlags: 0

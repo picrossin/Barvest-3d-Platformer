@@ -8,6 +8,7 @@ public class GameplayManager : MonoBehaviour
 
     [SerializeField] private Animation m_CanvasAnimation;
     [SerializeField] private HUD m_Hud;
+    [SerializeField] private MusicManager m_MusicManager;
     
     private bool m_Started;
     public bool Started => m_Started;
@@ -79,6 +80,7 @@ public class GameplayManager : MonoBehaviour
         m_CanvasAnimation.Play("StartGame");
         m_Hud.ShowHUD(true);
         m_Hud.SetCoinCount(0, m_TotalCoins);
+        m_MusicManager.StartLevelMusic();
     }
 
     public void OpenBook()
