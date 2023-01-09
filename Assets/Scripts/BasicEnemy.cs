@@ -51,7 +51,8 @@ public class BasicEnemy : MonoBehaviour
     private bool m_Turning = false;
     private float m_OldSpeed;
     private Transform m_LookAtPlayer;
-
+    private AudioSource m_AudioSource;
+    
     // AddPositionToPath is used by an editor script to populate the m_PathPositions List
     public void AddPositionToPath()
     {
@@ -60,6 +61,8 @@ public class BasicEnemy : MonoBehaviour
 
     void Start()
     {
+        m_AudioSource = GetComponent<AudioSource>();
+        
         if (!m_Boss)
         {
             m_Enemy = GetComponent<NavMeshAgent>();
@@ -185,5 +188,17 @@ public class BasicEnemy : MonoBehaviour
         
         // Stop turning
         m_Turning = false;
+    }
+
+    public void WrapSound(bool play)
+    {
+        if (play)
+        {
+            m_AudioSource.Play();
+        }
+        else
+        {
+            m_AudioSource.Stop();
+        }
     }
 }

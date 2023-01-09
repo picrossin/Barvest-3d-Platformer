@@ -12,6 +12,7 @@ public class IKFootSolver : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float stepHeight;
     [SerializeField] float airSmoothing = 1f;
+    [SerializeField] private GameObject m_FootstepSFX;
 
     Vector3 newPosition;
     Vector3 currentPosition;
@@ -51,6 +52,10 @@ public class IKFootSolver : MonoBehaviour
             {
                 if (Vector3.Distance(newPosition, info.point) > stepDistance)
                 {
+                    // Play footstep sound
+                    if (m_FootstepSFX)
+                        Instantiate(m_FootstepSFX, currentPosition, Quaternion.identity).GetComponent<AudioSource>().pitch += Random.Range(-0.05f, 0.05f);
+                    
                     lerp = 0;
                     newPosition = info.point;
 
@@ -58,7 +63,6 @@ public class IKFootSolver : MonoBehaviour
 
                     if (info.transform.TryGetComponent(out Platform newPlatform))
                     {
-                        Debug.Log("on platform");
                         platform = newPlatform;
                         platformOffset = newPosition - platform.transform.position;
                     }

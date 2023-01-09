@@ -32,6 +32,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_CameraFollowDistance = 3f;
     [SerializeField] private float m_GrappleExtraForce = 3f;
     [SerializeField] private float m_EnemySwallowSpeed = 0.05f;
+    
+    [Header("Audio")]
+    [SerializeField] private GameObject m_WebSplatSFX;
+    [SerializeField] private GameObject m_ChompSFX;
+    [SerializeField] private GameObject m_JumpSFX;
+    [SerializeField] private GameObject m_WrappedSFX;
 
     private Rigidbody m_Rigidbody;
     private Collider m_Collider;
@@ -107,7 +113,8 @@ public class PlayerController : MonoBehaviour
             if (Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, out RaycastHit hit, 0.3f, m_GroundLayerMask))
             {
                 m_Rigidbody.AddForce(Vector3.up * m_JumpForce, ForceMode.Impulse);
-                
+                Instantiate(m_JumpSFX, transform.position, Quaternion.identity);
+
                 Vector3 oldVel = m_Rigidbody.velocity;
                 m_Rigidbody.velocity = new Vector3(oldVel.x, 0f, oldVel.z);
             }
@@ -115,7 +122,8 @@ public class PlayerController : MonoBehaviour
             {
                 m_Rigidbody.AddForce(Vector3.up * m_DoubleJumpForce, ForceMode.Impulse);
                 m_DoubleJumped = true;
-                
+                Instantiate(m_JumpSFX, transform.position, Quaternion.identity).GetComponent<AudioSource>().pitch += 0.1f;
+
                 Vector3 oldVel = m_Rigidbody.velocity;
                 m_Rigidbody.velocity = new Vector3(oldVel.x, 0f, oldVel.z);
             }
@@ -125,6 +133,8 @@ public class PlayerController : MonoBehaviour
         if (m_EnemyDistanceDetection.ClosestEnemy != null && Input.GetMouseButtonDown(0) && !m_Wrapping)
         {
             m_WrappingEnemy = m_EnemyDistanceDetection.ClosestEnemy.GetComponent<BasicEnemy>();
+
+            Instantiate(m_WebSplatSFX, m_WrappingEnemy.transform.position, Quaternion.identity);
 
             if (m_WrappingEnemy.Wrapped)
             {
@@ -138,6 +148,8 @@ public class PlayerController : MonoBehaviour
                 m_Wrapping = true;
                 m_CameraRig.FollowObject = m_EnemyDistanceDetection.ClosestEnemy.transform;
             
+                m_WrappingEnemy.WrapSound(true);
+                
                 Vector3 diff = transform.position - m_WrappingEnemy.transform.position;
                 m_WrapStartAngle = Mathf.Atan2(diff.x, diff.z);
 
@@ -206,6 +218,7 @@ public class PlayerController : MonoBehaviour
                 if (currentDegree > 340f)
                 {
                     m_WrappingEnemy.Wrapped = true;
+                    Instantiate(m_WrappedSFX, m_WrappingEnemy.transform.position, Quaternion.identity);
                     ResetWrapped();
                 } 
                 else if (currentDegree < 20f)
@@ -237,6 +250,8 @@ public class PlayerController : MonoBehaviour
             m_Grappling = true;
             m_GrapplePoint = m_GrappleDistanceDetection.ClosestGrapple;
             
+            Instantiate(m_WebSplatSFX, m_GrapplePoint.transform.position, Quaternion.identity);
+
             m_WebLineRenderer = Instantiate(m_WebLine, Vector3.zero, Quaternion.identity).GetComponent<LineRenderer>();
 
             m_GrappleJoint = gameObject.AddComponent<SpringJoint>();
@@ -346,6 +361,7 @@ public class PlayerController : MonoBehaviour
         m_WrapDirectionChosen = false;
         m_CameraRig.FollowObject = null;
 
+        m_WrappingEnemy.WrapSound(false);
         m_WrappingEnemy.Cocoon.GetComponent<MeshRenderer>().material.SetFloat("_CutoffHeight", 0f);
 
         if (m_WrappingEnemy.Wrapped)
@@ -381,6 +397,7 @@ public class PlayerController : MonoBehaviour
         
         enemy.GetComponent<BasicEnemy>().CollectionImage.color = Color.white;
 
+        Instantiate(m_ChompSFX, transform.position, Quaternion.identity);
         Destroy(m_WebLineRenderer.gameObject);
         Destroy(enemy);
         

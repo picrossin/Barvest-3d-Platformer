@@ -9,6 +9,9 @@ public class GameplayManager : MonoBehaviour
     [SerializeField] private Animation m_CanvasAnimation;
     [SerializeField] private HUD m_Hud;
     [SerializeField] private MusicManager m_MusicManager;
+    [SerializeField] private GameObject m_ButtonHoverSFX;
+    [SerializeField] private GameObject m_ButtonClickSFX;
+    [SerializeField] private GameObject m_BookSFX;
     
     private bool m_Started;
     public bool Started => m_Started;
@@ -88,6 +91,7 @@ public class GameplayManager : MonoBehaviour
         m_Stopwatch.Pause();
         m_CanvasAnimation.Play("BookIn");
         m_BookOpen = true;
+        Instantiate(m_BookSFX);
         StartCoroutine(CloseBookWait());
         
         Cursor.visible = true;
@@ -102,7 +106,8 @@ public class GameplayManager : MonoBehaviour
         m_Stopwatch.Unpause();
         m_CanvasAnimation.Play("BookOut");
         m_BookOpen = false;
-        
+        Instantiate(m_BookSFX).GetComponent<AudioSource>().pitch -= 0.7f;
+
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -110,6 +115,16 @@ public class GameplayManager : MonoBehaviour
     public void PlayAgain()
     {
         SceneManager.LoadScene(0);
+    }
+
+    public void PlayHoverSound()
+    {
+        Instantiate(m_ButtonHoverSFX);
+    }
+    
+    public void PlayClickSound()
+    {
+        Instantiate(m_ButtonClickSFX);
     }
 
     private IEnumerator CloseBookWait()

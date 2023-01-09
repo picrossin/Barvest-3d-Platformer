@@ -8,6 +8,10 @@ public class ElementCollider : MonoBehaviour
 {
     [SerializeField] private float m_TrampolineForce = 7.5f;
     [SerializeField] private Vector3 _respawnCoordinates;
+    [SerializeField] private GameObject m_CoinSound;
+    [SerializeField] private GameObject m_JumpSound;
+    [SerializeField] private GameObject m_OuchSound;
+    [SerializeField] private GameObject m_CheckpointSound;
 
     private bool m_Died = false;
     private bool m_SpeedChanged = false;
@@ -29,8 +33,8 @@ public class ElementCollider : MonoBehaviour
         if (other.gameObject.layer == 6 && !m_Died)
         {
             // m_Died = true;
-            Debug.Log("Spider death :(");
-            
+            Instantiate(m_OuchSound);
+
             GameplayManager.Instance.Respawn.Respawn(transform.parent);
         }
 
@@ -56,6 +60,8 @@ public class ElementCollider : MonoBehaviour
             m_ApplyingTrampolineForce = true;
             Rigidbody parentRigidbody = GetComponentInParent<Rigidbody>();
 
+            Instantiate(m_JumpSound, transform.position, Quaternion.identity);
+
             float force = other.gameObject.name == "SuperTramp" ? m_TrampolineForce * 3f : m_TrampolineForce;
             
             parentRigidbody.AddForce(Vector3.up * force, ForceMode.Impulse);
@@ -66,6 +72,7 @@ public class ElementCollider : MonoBehaviour
         if (other.gameObject.layer == 9)
         {
             Debug.Log("Increase Collectible Score!");
+            Instantiate(m_CoinSound, other.transform.position, Quaternion.identity);
             GameplayManager.Instance.CollectCoin();
             Destroy(other.gameObject);
         }
@@ -76,6 +83,7 @@ public class ElementCollider : MonoBehaviour
             Debug.Log("Checkpoint!");
             GameplayManager.Instance.Respawn.SetRespawnPoint(
                other.transform.position);
+            Instantiate(m_CheckpointSound, transform.position, Quaternion.identity);
             other.GetComponent<Animation>().Play();
         }
     }
