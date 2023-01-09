@@ -15,6 +15,7 @@ public class EnemyDistanceDetection : MonoBehaviour
 
     private SphereCollider m_SphereCollider;
     private List<GameObject> m_EnemiesInRange = new List<GameObject>();
+    private PlayerController m_PlayerController;
 
     void Start()
     {
@@ -22,12 +23,13 @@ public class EnemyDistanceDetection : MonoBehaviour
         m_SphereCollider.isTrigger = true;
         m_SphereCollider.radius = m_ColliderDistance;
         m_WebIcon.gameObject.SetActive(false);
+        m_PlayerController = transform.parent.GetComponent<PlayerController>();
     }
 
     void Update()
     {
         GameObject closestEnemy = GetClosestEnemy();
-        if (closestEnemy)
+        if (closestEnemy && !m_PlayerController.Wrapping)
         {
             Vector2 viewportPos = Camera.main.WorldToViewportPoint(closestEnemy.GetComponent<BasicEnemy>().Mesh.transform.position);
             Vector2 targetPoint = new Vector2(

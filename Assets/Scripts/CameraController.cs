@@ -82,7 +82,6 @@ public class CameraController : MonoBehaviour
 
 	public void SetCameraSensitivity(Slider sensitivity)
 	{
-		Debug.Log($"Sensitivity: {sensitivity.value}");
 		m_LookSensitivity = sensitivity.value;
 	}
 

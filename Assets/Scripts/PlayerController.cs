@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float m_CameraFollowDistance = 3f;
     [SerializeField] private float m_GrappleExtraForce = 3f;
     [SerializeField] private float m_EnemySwallowSpeed = 0.05f;
+    [SerializeField] private float m_CoyoteTime = 1f;
     
     [Header("Audio")]
     [SerializeField] private GameObject m_WebSplatSFX;
@@ -58,11 +59,16 @@ public class PlayerController : MonoBehaviour
     }
 
     private bool m_Wrapping;
+    public bool Wrapping => m_Wrapping;
+
     private BasicEnemy m_WrappingEnemy;
     private float m_WrapStartAngle;
     private bool m_WrapDirectionChosen;
     private bool m_WrappingClockwise;
     private float m_WrappedAmount;
+    private bool m_CanCoyoteJump;
+    private bool m_CanCoyoteTime = true;
+    private bool m_NormalJumped;
 
     private bool m_Grappling;
     private GameObject m_GrapplePoint;
@@ -106,12 +112,22 @@ public class PlayerController : MonoBehaviour
             m_GroundLayerMask))
         {
             m_DoubleJumped = false;
+            m_CanCoyoteTime = true;
         }
-
+        else if (m_CanCoyoteTime)
+        {
+            StartCoroutine(CoyoteTimeWait());
+        }
+        
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 0"))
         {
-            if (Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, out RaycastHit hit, 0.3f, m_GroundLayerMask))
+            if (Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, out RaycastHit hit, 0.3f, m_GroundLayerMask) || (m_CanCoyoteJump && !m_NormalJumped))
             {
+                if (hit.collider != null)
+                    m_NormalJumped = true;
+             
+                m_CanCoyoteJump = false;
+                m_CanCoyoteTime = false;
                 m_Rigidbody.AddForce(Vector3.up * m_JumpForce, ForceMode.Impulse);
                 Instantiate(m_JumpSFX, transform.position, Quaternion.identity);
 
@@ -120,6 +136,8 @@ public class PlayerController : MonoBehaviour
             }
             else if (!m_DoubleJumped)
             {
+                m_CanCoyoteJump = false;
+                m_CanCoyoteTime = false;
                 m_Rigidbody.AddForce(Vector3.up * m_DoubleJumpForce, ForceMode.Impulse);
                 m_DoubleJumped = true;
                 Instantiate(m_JumpSFX, transform.position, Quaternion.identity).GetComponent<AudioSource>().pitch += 0.1f;
@@ -402,5 +420,14 @@ public class PlayerController : MonoBehaviour
         Destroy(enemy);
         
         GameplayManager.Instance.CollectEnemy();
+    }
+
+    private IEnumerator CoyoteTimeWait()
+    {
+        m_CanCoyoteTime = false;
+        m_CanCoyoteJump = true;
+        yield return new WaitForSeconds(m_CoyoteTime);
+        m_CanCoyoteJump = false;
+        m_NormalJumped = false;
     }
 }
