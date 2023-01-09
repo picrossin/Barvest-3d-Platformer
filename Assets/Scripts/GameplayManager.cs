@@ -25,14 +25,25 @@ public class GameplayManager : MonoBehaviour
     private RespawnManager m_RespawnManager;
     public RespawnManager Respawn => m_RespawnManager;
 
+    private Stopwatch m_Stopwatch;
+    public Stopwatch Stopwatch => m_Stopwatch;
+
     private void Awake()
     {
+        
         Instance = this;
 
+        
         m_RespawnManager = GetComponent<RespawnManager>();
+        m_Stopwatch = GetComponent<Stopwatch>();
 
         m_TotalEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
         m_TotalCoins = GameObject.FindGameObjectsWithTag("Coin").Length;
+    }
+
+    private void Update()
+    {
+        Debug.Log(m_Stopwatch.GetSeconds());
     }
 
     public void CollectCoin()
@@ -45,7 +56,7 @@ public class GameplayManager : MonoBehaviour
     {
         m_EnemiesCollected++;
         Debug.Log($"{m_EnemiesCollected} / {m_TotalEnemies}");
-
+        
         if (m_EnemiesCollected >= m_TotalEnemies)
         {
             m_GameCompleted = true;
@@ -56,6 +67,7 @@ public class GameplayManager : MonoBehaviour
 
     public void StartGame()
     {
+        m_Stopwatch.Begin();
         m_Started = true;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -64,6 +76,7 @@ public class GameplayManager : MonoBehaviour
 
     public void OpenBook()
     {
+        m_Stopwatch.Pause();
         m_CanvasAnimation.Play("BookIn");
         m_BookOpen = true;
         StartCoroutine(CloseBookWait());
@@ -77,6 +90,7 @@ public class GameplayManager : MonoBehaviour
         if (!m_CanCloseBook || m_GameCompleted)
             return;
         
+        m_Stopwatch.Unpause();
         m_CanvasAnimation.Play("BookOut");
         m_BookOpen = false;
         
