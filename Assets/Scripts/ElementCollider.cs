@@ -13,6 +13,7 @@ public class ElementCollider : MonoBehaviour
     [SerializeField] private GameObject m_JumpSound;
     [SerializeField] private GameObject m_OuchSound;
     [SerializeField] private GameObject m_CheckpointSound;
+    [SerializeField] private GameObject m_CoinExplosion;
 
     private bool m_Died = false;
     private bool m_SpeedChanged = false;
@@ -84,6 +85,7 @@ public class ElementCollider : MonoBehaviour
         {
             Debug.Log("Increase Collectible Score!");
             Instantiate(m_CoinSound, other.transform.position, Quaternion.identity);
+            Instantiate(m_CoinExplosion, other.transform.position, Quaternion.identity);
             GameplayManager.Instance.CollectCoin();
             Destroy(other.gameObject);
         }

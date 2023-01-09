@@ -14,6 +14,9 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera m_ThirdPersonVirtualCam;
     [SerializeField] private GameObject m_WebLine;
     [SerializeField] private Material m_FullCocoonMat;
+    [SerializeField] private ParticleSystem m_Trail;
+    [SerializeField] private GameObject m_ChompParticles;
+    [SerializeField] private GameObject m_JumpParticles;
     
     [Header("Settings")]
     [SerializeField] private float m_MaxSpeed = 2f;
@@ -62,9 +65,9 @@ public class PlayerController : MonoBehaviour
     public bool Wrapping => m_Wrapping;
 
     private BasicEnemy m_WrappingEnemy;
-    private float m_WrapStartAngle;
     private bool m_WrapDirectionChosen;
     private bool m_WrappingClockwise;
+    private Vector3 m_InitialWrappingPos;
     private float m_WrappedAmount;
     private bool m_CanCoyoteJump;
     private bool m_CanCoyoteTime = true;
@@ -113,18 +116,25 @@ public class PlayerController : MonoBehaviour
         {
             m_DoubleJumped = false;
             m_CanCoyoteTime = true;
+            
+            if (!m_Trail.isPlaying)
+                m_Trail.Play();
         }
         else if (m_CanCoyoteTime)
         {
             StartCoroutine(CoyoteTimeWait());
+            if(m_Trail.isPlaying)
+                m_Trail.Stop();
         }
-        
+
         if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 0"))
         {
             if (Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, out RaycastHit hit, 0.3f, m_GroundLayerMask) || (m_CanCoyoteJump && !m_NormalJumped))
             {
                 if (hit.collider != null)
                     m_NormalJumped = true;
+
+                Instantiate(m_JumpParticles, transform.position + Vector3.down * 0.05f, Quaternion.identity);
              
                 m_CanCoyoteJump = false;
                 m_CanCoyoteTime = false;
@@ -168,8 +178,7 @@ public class PlayerController : MonoBehaviour
             
                 m_WrappingEnemy.WrapSound(true);
                 
-                Vector3 diff = transform.position - m_WrappingEnemy.transform.position;
-                m_WrapStartAngle = Mathf.Atan2(diff.x, diff.z);
+                m_InitialWrappingPos = transform.position - m_WrappingEnemy.transform.position;
 
                 m_WebLineRenderer = Instantiate(m_WebLine, Vector3.zero, Quaternion.identity).GetComponent<LineRenderer>();
                 
@@ -190,18 +199,21 @@ public class PlayerController : MonoBehaviour
             
             // Track wrapping amount
             Vector3 diff = transform.position - m_WrappingEnemy.transform.position;
-            float currentDegree = (m_WrapStartAngle - Mathf.Atan2(diff.x, diff.z)) * Mathf.Rad2Deg;
 
             // 1. Detect direction of wrap
             if (!m_WrapDirectionChosen)
             {
-                if (currentDegree > 30f) // Wrapping counter-clockwise ("right")
+                if (Vector3.SignedAngle(transform.position - m_WrappingEnemy.transform.position,
+                    Quaternion.AngleAxis(-25f, Vector3.up) * m_InitialWrappingPos, Vector3.up) > 0f)
                 {
+                    // Counter-clockwise
                     m_WrapDirectionChosen = true;
                     m_WrappingClockwise = false;
                 }
-                else if (currentDegree < -30f) // Wrapping clockwise ("left")
+                else if (Vector3.SignedAngle(transform.position - m_WrappingEnemy.transform.position,
+                    Quaternion.AngleAxis(25f, Vector3.up) * m_InitialWrappingPos, Vector3.up) < 0f)
                 {
+                    // Clockwise
                     m_WrapDirectionChosen = true;
                     m_WrappingClockwise = true;
                 }
@@ -209,37 +221,32 @@ public class PlayerController : MonoBehaviour
             else
             {
                 // 2. Track wrapping amount around chosen direction
+                float deg = Vector3.SignedAngle(transform.position - m_WrappingEnemy.transform.position,
+                    m_InitialWrappingPos, Vector3.up);
+                if (deg < 0)
+                {
+                    deg += 360f;
+                }
+                
                 if (!m_WrappingClockwise)
                 {
-                    // Ensure angles are between 0 - 360 degrees
-                    if (currentDegree < 0f)
-                    {
-                        currentDegree += 360f;
-                    }
+                    m_WrappedAmount = deg / 330f;
                 }
                 else
                 {
-                    // Ensure angles are between -1 - -360 degrees
-                    if (currentDegree > 0f)
-                    {
-                        currentDegree -= 360f;
-                    }
-
-                    currentDegree = -currentDegree; // Flip sign to be positive
+                    m_WrappedAmount = (360f - deg) / 330f;
                 }
                 
-                m_WrappedAmount = currentDegree / 340f;
-
                 m_WrappingEnemy.Cocoon.GetComponent<MeshRenderer>().material.SetFloat("_CutoffHeight", Mathf.Lerp(-0.5f, 1.7f, m_WrappedAmount));
-                // Debug.Log(Vector3.Distance(transform.position, m_WrappingEnemy.transform.position));
                 
-                if (currentDegree > 340f)
+                if (m_WrappedAmount >= 0.9f)
                 {
+                    m_WrappingEnemy.Cocoon.GetComponent<MeshRenderer>().material.SetFloat("_CutoffHeight", Mathf.Lerp(-0.5f, 1.7f, 1));
                     m_WrappingEnemy.Wrapped = true;
                     Instantiate(m_WrappedSFX, m_WrappingEnemy.transform.position, Quaternion.identity);
                     ResetWrapped();
                 } 
-                else if (currentDegree < 20f)
+                else if ((m_WrappingClockwise && deg > 340f) || (!m_WrappingClockwise && deg < 20f))
                 {
                     ResetWrapped();
                 } 
@@ -416,6 +423,7 @@ public class PlayerController : MonoBehaviour
         enemy.GetComponent<BasicEnemy>().CollectionImage.color = Color.white;
 
         Instantiate(m_ChompSFX, transform.position, Quaternion.identity);
+        Instantiate(m_ChompParticles, transform.position, Quaternion.identity);
         Destroy(m_WebLineRenderer.gameObject);
         Destroy(enemy);
         
