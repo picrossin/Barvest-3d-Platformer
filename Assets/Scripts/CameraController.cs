@@ -46,9 +46,9 @@ public class CameraController : MonoBehaviour
 			{
 				angles.x = 360f;
 			}
-			else if (angle < 180f && angle > 40f)
+			else if (angle < 180f && angle > 65f)
 			{
-				angles.x = 40f;
+				angles.x = 65f;
 			}
 		}
 		else

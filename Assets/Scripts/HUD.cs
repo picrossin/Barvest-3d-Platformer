@@ -51,6 +51,6 @@ public class HUD : MonoBehaviour
 
     public void SetCoinCount(int count, int max)
     {
-        m_CoinCount.SetText($"{count:D3}/{max:D3}");
+        m_CoinCount.SetText($"{count:D2}/{max:D2}");
     }
 }

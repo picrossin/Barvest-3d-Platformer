@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -22,6 +23,16 @@ public class ElementCollider : MonoBehaviour
     {
         m_OriginalMaxSpeed = GetComponentInParent<PlayerController>().MaxSpeed;
         GameplayManager.Instance.Respawn.SetRespawnPoint(transform.position);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R) || Input.GetKeyDown("joystick button 6"))
+        {
+            Instantiate(m_OuchSound);
+
+            GameplayManager.Instance.Respawn.Respawn(transform.parent);
+        }
     }
 
     private void OnTriggerEnter(Collider other)

@@ -86,7 +86,7 @@ public class PlayerController : MonoBehaviour
             return;
 
         // Menu opening
-        if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown("joystick button 7"))
         {
             if (GameplayManager.Instance.BookOpen)
             {
@@ -108,7 +108,7 @@ public class PlayerController : MonoBehaviour
             m_DoubleJumped = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown("joystick button 0"))
         {
             if (Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, out RaycastHit hit, 0.3f, m_GroundLayerMask))
             {
@@ -130,7 +130,7 @@ public class PlayerController : MonoBehaviour
         }
 
         // Shoot web
-        if (m_EnemyDistanceDetection.ClosestEnemy != null && Input.GetMouseButtonDown(0) && !m_Wrapping)
+        if (m_EnemyDistanceDetection.ClosestEnemy != null && (Input.GetMouseButtonDown(0) || Input.GetAxis("WebTrigger") > 0.1f || Input.GetKeyDown("joystick button 1")) && !m_Wrapping)
         {
             m_WrappingEnemy = m_EnemyDistanceDetection.ClosestEnemy.GetComponent<BasicEnemy>();
 
@@ -245,7 +245,7 @@ public class PlayerController : MonoBehaviour
         }
         
         // Shoot grapple web
-        if (m_GrappleDistanceDetection.ClosestGrapple != null && Input.GetMouseButtonDown(0) && !m_Grappling)
+        if (m_GrappleDistanceDetection.ClosestGrapple != null && (Input.GetMouseButtonDown(0) || Input.GetAxis("WebTrigger") > 0.1f || Input.GetKeyDown("joystick button 1")) && !m_Grappling)
         {
             m_Grappling = true;
             m_GrapplePoint = m_GrappleDistanceDetection.ClosestGrapple;
