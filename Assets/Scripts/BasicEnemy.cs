@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class BasicEnemy : MonoBehaviour
@@ -25,6 +26,9 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] private GameObject m_Cocoon;
     public GameObject Cocoon => m_Cocoon;
     
+    [SerializeField] private Image m_CollectionImage;
+    public Image CollectionImage => m_CollectionImage;
+
     private bool m_Wrapped;
     public bool Wrapped
     {

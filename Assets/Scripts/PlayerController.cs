@@ -378,6 +378,8 @@ public class PlayerController : MonoBehaviour
             enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, transform.position, m_EnemySwallowSpeed);
             yield return new WaitForEndOfFrame();
         }
+        
+        enemy.GetComponent<BasicEnemy>().CollectionImage.color = Color.white;
 
         Destroy(m_WebLineRenderer.gameObject);
         Destroy(enemy);

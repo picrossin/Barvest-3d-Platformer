@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameplayManager : MonoBehaviour
 {
@@ -38,7 +39,7 @@ public class GameplayManager : MonoBehaviour
 
         m_TotalEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
         m_TotalCoins = GameObject.FindGameObjectsWithTag("Coin").Length;
-        
+
         m_Hud.ShowHUD(false);
     }
 
@@ -50,6 +51,7 @@ public class GameplayManager : MonoBehaviour
     public void CollectCoin()
     {
         m_CoinsCollected++;
+        m_Hud.SetCoinCount(m_CoinsCollected, m_TotalCoins);
         Debug.Log($"{m_CoinsCollected} / {m_TotalCoins}");
     }
 
@@ -62,6 +64,7 @@ public class GameplayManager : MonoBehaviour
         if (m_EnemiesCollected >= m_TotalEnemies)
         {
             m_GameCompleted = true;
+            m_Hud.GameOver();
             OpenBook();
             Debug.Log("YOU WIN!!!!!!");
         }
@@ -75,6 +78,7 @@ public class GameplayManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         m_CanvasAnimation.Play("StartGame");
         m_Hud.ShowHUD(true);
+        m_Hud.SetCoinCount(0, m_TotalCoins);
     }
 
     public void OpenBook()
@@ -99,6 +103,11 @@ public class GameplayManager : MonoBehaviour
         
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void PlayAgain()
+    {
+        SceneManager.LoadScene(0);
     }
 
     private IEnumerator CloseBookWait()
