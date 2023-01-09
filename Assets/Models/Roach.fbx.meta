@@ -3,7 +3,22 @@ guid: fbc05246b301c414fbe03ea0fe09b5f8
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roach_Rig_mat_roach_body
+    second: {fileID: 2100000, guid: a9a3f944fbb739142953c044efbec08d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roach_Rig_mat_roach_eye
+    second: {fileID: 2100000, guid: 603f13ab3508da94ba0bf896f5a71cc3, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Roach_Rig_mat_roach_leg
+    second: {fileID: 2100000, guid: f72fca29fb496b448938f2f74a2f6a4d, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

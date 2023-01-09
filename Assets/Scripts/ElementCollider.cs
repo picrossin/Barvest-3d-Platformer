@@ -73,6 +73,7 @@ public class ElementCollider : MonoBehaviour
             Debug.Log("Checkpoint!");
             GameplayManager.Instance.Respawn.SetRespawnPoint(
                other.transform.position);
+            other.GetComponent<Animation>().Play();
         }
     }
     private void OnTriggerExit(Collider other)

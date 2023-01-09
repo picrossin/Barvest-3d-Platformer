@@ -19,6 +19,9 @@ public class BasicEnemy : MonoBehaviour
         set => m_UnderAttack = value;
     }
 
+    [SerializeField] private GameObject m_MeshRenderer;
+    public GameObject Mesh => m_MeshRenderer;
+
     private bool m_Wrapped;
     public bool Wrapped
     {

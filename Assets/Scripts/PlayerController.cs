@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour
                 Vector3.Distance(transform.position, m_WrappingEnemy.transform.position) + m_CameraFollowDistance;
             
             // Draw line
-            m_WebLineRenderer.SetPositions(new[] {transform.position + Vector3.up * 0.2f, m_WrappingEnemy.transform.position});
+            m_WebLineRenderer.SetPositions(new[] {transform.position + Vector3.up * 0.2f, m_WrappingEnemy.Mesh.transform.position});
             
             // Track wrapping amount
             Vector3 diff = transform.position - m_WrappingEnemy.transform.position;
@@ -349,12 +349,13 @@ public class PlayerController : MonoBehaviour
     private IEnumerator EatEnemy(GameObject enemy)
     {
         enemy.GetComponent<NavMeshAgent>().enabled = false;
+        enemy.GetComponent<BoxCollider>().enabled = false;
 
         m_WebLineRenderer = Instantiate(m_WebLine, Vector3.zero, Quaternion.identity).GetComponent<LineRenderer>();
 
         while (Vector3.Distance(enemy.transform.position, transform.position) > 0.5f)
         {
-            m_WebLineRenderer.SetPositions(new[] {transform.position + Vector3.up * 0.2f, enemy.transform.position});
+            m_WebLineRenderer.SetPositions(new[] {transform.position + Vector3.up * 0.2f, enemy.GetComponent<BasicEnemy>().Mesh.transform.position});
 
             enemy.transform.position = Vector3.MoveTowards(enemy.transform.position, transform.position, m_EnemySwallowSpeed);
             yield return new WaitForEndOfFrame();

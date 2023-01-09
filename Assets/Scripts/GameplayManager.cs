@@ -20,6 +20,7 @@ public class GameplayManager : MonoBehaviour
     private int m_CoinsCollected;
 
     private bool m_CanCloseBook;
+    private bool m_GameCompleted;
     
     private RespawnManager m_RespawnManager;
     public RespawnManager Respawn => m_RespawnManager;
@@ -58,6 +59,8 @@ public class GameplayManager : MonoBehaviour
         
         if (m_EnemiesCollected >= m_TotalEnemies)
         {
+            m_GameCompleted = true;
+            OpenBook();
             Debug.Log("YOU WIN!!!!!!");
         }
     }
@@ -84,7 +87,7 @@ public class GameplayManager : MonoBehaviour
     
     public void CloseBook()
     {
-        if (!m_CanCloseBook)
+        if (!m_CanCloseBook || m_GameCompleted)
             return;
         
         m_Stopwatch.Unpause();
