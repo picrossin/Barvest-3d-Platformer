@@ -6,6 +6,7 @@ public class GameplayManager : MonoBehaviour
     public static GameplayManager Instance { get; set; }
 
     [SerializeField] private Animation m_CanvasAnimation;
+    [SerializeField] private HUD m_Hud;
     
     private bool m_Started;
     public bool Started => m_Started;
@@ -39,11 +40,13 @@ public class GameplayManager : MonoBehaviour
 
         m_TotalEnemies = GameObject.FindGameObjectsWithTag("Enemy").Length;
         m_TotalCoins = GameObject.FindGameObjectsWithTag("Coin").Length;
+        
+        m_Hud.ShowHUD(false);
     }
 
     private void Update()
     {
-        Debug.Log(m_Stopwatch.GetSeconds());
+        m_Hud.SetTimer(m_Stopwatch.GetSeconds());
     }
 
     public void CollectCoin()
@@ -72,6 +75,7 @@ public class GameplayManager : MonoBehaviour
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         m_CanvasAnimation.Play("StartGame");
+        m_Hud.ShowHUD(true);
     }
 
     public void OpenBook()
