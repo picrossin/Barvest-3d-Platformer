@@ -10,12 +10,6 @@ public class CameraController : MonoBehaviour
 
 	public Transform FollowObject { get; set; }
 	
-	private void Start()
-	{
-		Cursor.visible = false;
-		Cursor.lockState = CursorLockMode.Locked;
-	}
-
 	private void LateUpdate()
 	{
 		Vector2 input = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * 
@@ -23,7 +17,7 @@ public class CameraController : MonoBehaviour
 
 		if (!GameplayManager.Instance.Started)
 		{
-			input = new Vector2(1f, 0f) * (Time.fixedDeltaTime * m_StartScreenSpinSpeed);
+			input = new Vector2(1f, 0f) * (Time.deltaTime * m_StartScreenSpinSpeed);
 		}
 
 		Vector3 angles = transform.localEulerAngles;

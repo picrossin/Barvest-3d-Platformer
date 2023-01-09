@@ -4,6 +4,8 @@ public class GameplayManager : MonoBehaviour
 {
     public static GameplayManager Instance { get; set; }
 
+    [SerializeField] private Animation m_CanvasAnimation;
+    
     private bool m_Started;
     public bool Started => m_Started;
 
@@ -46,5 +48,8 @@ public class GameplayManager : MonoBehaviour
     public void StartGame()
     {
         m_Started = true;
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        m_CanvasAnimation.Play("StartGame");
     }
 }
