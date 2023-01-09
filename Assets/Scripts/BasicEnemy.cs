@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.UI;
@@ -11,7 +12,7 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] private List<Vector3> m_PathPositions;
     [SerializeField] private float m_MoveSpeed = 3.5f;
     [SerializeField] private float m_UnderAttackSpeed = 0.5f;
-
+    
     // Private values
     [SerializeField] private bool m_UnderAttack = false;
     public bool UnderAttack
@@ -29,6 +30,8 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] private Image m_CollectionImage;
     public Image CollectionImage => m_CollectionImage;
 
+    [SerializeField] private bool m_Boss;
+    
     private bool m_Wrapped;
     public bool Wrapped
     {
@@ -47,6 +50,7 @@ public class BasicEnemy : MonoBehaviour
     private int m_CurrentDestinationIndex;
     private bool m_Turning = false;
     private float m_OldSpeed;
+    private Transform m_LookAtPlayer;
 
     // AddPositionToPath is used by an editor script to populate the m_PathPositions List
     public void AddPositionToPath()
@@ -56,14 +60,20 @@ public class BasicEnemy : MonoBehaviour
 
     void Start()
     {
-        m_Enemy = GetComponent<NavMeshAgent>();
-        m_Enemy.destination = m_PathPositions[m_CurrentDestinationIndex];
-        m_Enemy.speed = m_MoveSpeed;
-        m_Enemy.updatePosition = false;
+        if (!m_Boss)
+        {
+            m_Enemy = GetComponent<NavMeshAgent>();
+            m_Enemy.destination = m_PathPositions[m_CurrentDestinationIndex];
+            m_Enemy.speed = m_MoveSpeed;
+            m_Enemy.updatePosition = false;
+        }
     }
 
     void Update()
     {
+        if (m_Boss)
+            return;
+        
         if (m_Wrapped)
         {
             m_Enemy.speed = 0f;
@@ -111,8 +121,27 @@ public class BasicEnemy : MonoBehaviour
     {
         if (GameplayManager.Instance.BookOpen)
             return;
+        
+        if (m_Boss)
+        {
+            if (m_LookAtPlayer == null)
+            {
+                GameObject p = GameObject.FindGameObjectWithTag("Player");
 
-        transform.position = m_Enemy.nextPosition;
+                if (p != null)
+                    m_LookAtPlayer = p.transform;
+            }
+
+            if (m_LookAtPlayer != null)
+            {
+                Vector3 playerXZ = new Vector3(m_LookAtPlayer.position.x, transform.position.y, m_LookAtPlayer.position.z);
+                transform.rotation = quaternion.LookRotation(playerXZ - transform.position, Vector3.up);
+            }
+        }
+        else
+        {
+            transform.position = m_Enemy.nextPosition;
+        }
     }
 
     void MoveEnemy()
@@ -123,6 +152,7 @@ public class BasicEnemy : MonoBehaviour
         if (m_Enemy.pathPending) return;
         if (m_Enemy.remainingDistance > m_Enemy.stoppingDistance) return;
         if (m_Enemy.hasPath || m_Enemy.velocity.sqrMagnitude != 0f) return;
+        if (m_Boss) return;
 
         StartCoroutine(SmoothTurn());
     }

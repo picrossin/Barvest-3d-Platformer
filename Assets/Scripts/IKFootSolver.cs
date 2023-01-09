@@ -35,7 +35,7 @@ public class IKFootSolver : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (player.Grounded())
+        if (player == null || player.Grounded())
         {
             if (platform != null)
             {
