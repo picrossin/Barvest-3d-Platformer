@@ -3,7 +3,17 @@ guid: 2682905aaefc87f4183bd875f6c59fee
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Grasshopper_Rig_mat_grasshopper_body
+    second: {fileID: 2100000, guid: 66b4cd8f1958e6d43beea1cdbc26a63e, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Grasshopper_Rig_mat_grasshopper_eye
+    second: {fileID: 2100000, guid: 2a5100e60a1e4e0408f6573294671721, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

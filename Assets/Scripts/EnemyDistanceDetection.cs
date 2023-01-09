@@ -6,8 +6,6 @@ public class EnemyDistanceDetection : MonoBehaviour
 {
     // Editor Values
     [SerializeField] private float m_ColliderDistance;
-    [SerializeField] private Material m_FirstMaterial;
-    [SerializeField] private Material m_SecondMaterial;
     [SerializeField] private RectTransform m_CanvasRect;
     [SerializeField] private RectTransform m_WebIcon;
     
@@ -31,8 +29,7 @@ public class EnemyDistanceDetection : MonoBehaviour
         GameObject closestEnemy = GetClosestEnemy();
         if (closestEnemy)
         {
-            closestEnemy.GetComponent<MeshRenderer>().material = m_SecondMaterial;
-            Vector2 viewportPos = Camera.main.WorldToViewportPoint(closestEnemy.transform.position);
+            Vector2 viewportPos = Camera.main.WorldToViewportPoint(closestEnemy.GetComponent<BasicEnemy>().Mesh.transform.position);
             Vector2 targetPoint = new Vector2(
                 viewportPos.x * m_CanvasRect.sizeDelta.x - m_CanvasRect.sizeDelta.x * 0.5f,
                 viewportPos.y * m_CanvasRect.sizeDelta.y - m_CanvasRect.sizeDelta.y * 0.5f);
@@ -46,20 +43,7 @@ public class EnemyDistanceDetection : MonoBehaviour
 
         if (closestEnemy != m_ClosestEnemy)
         {
-            IndicateClosestEnemy(m_ClosestEnemy, closestEnemy);
             m_ClosestEnemy = closestEnemy;
-        }
-    }
-
-    private void IndicateClosestEnemy(GameObject oldClosestEnemy, GameObject newClosestEnemy)
-    {
-        if (oldClosestEnemy)
-        {
-            oldClosestEnemy.GetComponent<MeshRenderer>().material = m_FirstMaterial;
-        }
-        if (newClosestEnemy)
-        {
-            newClosestEnemy.GetComponent<MeshRenderer>().material = m_SecondMaterial;
         }
     }
 

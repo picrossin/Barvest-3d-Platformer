@@ -3,7 +3,27 @@ guid: 290603616a381fd41b5773a8f0fd13e6
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Moth_Rig_mat_moth_body
+    second: {fileID: 2100000, guid: a0d3e47d88aac494f90e2e1bb86326a8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Moth_Rig_mat_moth_eye
+    second: {fileID: 2100000, guid: c484e0910ecdf8741aa760b8a6132d03, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Moth_Rig_mat_moth_limb
+    second: {fileID: 2100000, guid: 22bc3d1177eb1b946887903ac41e2855, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Moth_Rig_mat_moth_wing
+    second: {fileID: 2100000, guid: ee58adcde36384a42ae081b3fb421639, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0

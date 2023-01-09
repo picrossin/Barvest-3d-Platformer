@@ -3,7 +3,22 @@ guid: 2a15122bf547fa94d881fd6bcc70cf99
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FLy_Rig_mat_fly_body
+    second: {fileID: 2100000, guid: aeebc8b0b2356fb4887fb1f67a0052fb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FLy_Rig_mat_fly_eye
+    second: {fileID: 2100000, guid: 7c624a8ac8e4d324f99983de3f039187, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FLy_Rig_mat_fly_wing
+    second: {fileID: 2100000, guid: 98662d622b0e64e40ad5f0caa456f922, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
