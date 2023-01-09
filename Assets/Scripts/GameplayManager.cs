@@ -31,9 +31,7 @@ public class GameplayManager : MonoBehaviour
 
     private void Awake()
     {
-        
         Instance = this;
-
         
         m_RespawnManager = GetComponent<RespawnManager>();
         m_Stopwatch = GetComponent<Stopwatch>();
@@ -58,7 +56,8 @@ public class GameplayManager : MonoBehaviour
     public void CollectEnemy()
     {
         m_EnemiesCollected++;
-        Debug.Log($"{m_EnemiesCollected} / {m_TotalEnemies}");
+        
+        m_Hud.SetStomachFill((float)m_EnemiesCollected / m_TotalEnemies);
         
         if (m_EnemiesCollected >= m_TotalEnemies)
         {
