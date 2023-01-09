@@ -22,6 +22,9 @@ public class BasicEnemy : MonoBehaviour
     [SerializeField] private GameObject m_MeshRenderer;
     public GameObject Mesh => m_MeshRenderer;
 
+    [SerializeField] private GameObject m_Cocoon;
+    public GameObject Cocoon => m_Cocoon;
+    
     private bool m_Wrapped;
     public bool Wrapped
     {

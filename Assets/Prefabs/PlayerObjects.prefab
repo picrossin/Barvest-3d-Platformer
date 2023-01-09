@@ -1326,6 +1326,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9065621000220998189}
     - target: {fileID: 1323416563, guid: 8101463ca55e7de44ad9c71b3746e768, type: 3}
+      propertyPath: m_FullCocoonMat
+      value: 
+      objectReference: {fileID: 2100000, guid: 442733a04796e914490fcb458eb7a837, type: 2}
+    - target: {fileID: 1323416563, guid: 8101463ca55e7de44ad9c71b3746e768, type: 3}
       propertyPath: m_GrappleExtraForce
       value: 4
       objectReference: {fileID: 0}

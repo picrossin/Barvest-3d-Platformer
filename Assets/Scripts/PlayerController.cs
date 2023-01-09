@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private PhysicMaterial m_HighFriction;
     [SerializeField] private CinemachineVirtualCamera m_ThirdPersonVirtualCam;
     [SerializeField] private GameObject m_WebLine;
+    [SerializeField] private Material m_FullCocoonMat;
     
     [Header("Settings")]
     [SerializeField] private float m_MaxSpeed = 2f;
@@ -141,6 +142,9 @@ public class PlayerController : MonoBehaviour
                 m_WrapStartAngle = Mathf.Atan2(diff.x, diff.z);
 
                 m_WebLineRenderer = Instantiate(m_WebLine, Vector3.zero, Quaternion.identity).GetComponent<LineRenderer>();
+                
+                m_WrappingEnemy.Cocoon.SetActive(true);
+                m_WrappingEnemy.Cocoon.GetComponent<MeshRenderer>().material.SetFloat("_CutoffHeight", -0.5f);
             }
         }
 
@@ -196,7 +200,8 @@ public class PlayerController : MonoBehaviour
                 
                 m_WrappedAmount = currentDegree / 340f;
 
-                Debug.Log(Vector3.Distance(transform.position, m_WrappingEnemy.transform.position));
+                m_WrappingEnemy.Cocoon.GetComponent<MeshRenderer>().material.SetFloat("_CutoffHeight", Mathf.Lerp(-0.5f, 1.7f, m_WrappedAmount));
+                // Debug.Log(Vector3.Distance(transform.position, m_WrappingEnemy.transform.position));
                 
                 if (currentDegree > 340f)
                 {
@@ -340,6 +345,19 @@ public class PlayerController : MonoBehaviour
         m_Wrapping = false;
         m_WrapDirectionChosen = false;
         m_CameraRig.FollowObject = null;
+
+        m_WrappingEnemy.Cocoon.GetComponent<MeshRenderer>().material.SetFloat("_CutoffHeight", 0f);
+
+        if (m_WrappingEnemy.Wrapped)
+        {
+            m_WrappingEnemy.Cocoon.GetComponent<MeshRenderer>().material = m_FullCocoonMat;
+        }
+        else
+        {
+            m_WrappingEnemy.Cocoon.GetComponent<MeshRenderer>().material.SetFloat("_CutoffHeight", 0f);
+            m_WrappingEnemy.Cocoon.SetActive(false);
+        }
+        
         m_WrappingEnemy.UnderAttack = false;
         m_WrappingEnemy = null;
         m_ThirdPersonCam.CameraDistance = m_CameraFollowDistance;
