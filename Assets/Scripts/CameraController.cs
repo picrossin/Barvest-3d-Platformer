@@ -12,6 +12,9 @@ public class CameraController : MonoBehaviour
 	
 	private void LateUpdate()
 	{
+		if (GameplayManager.Instance.BookOpen)
+			return;
+		
 		Vector2 input = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y")) * 
 		                (Time.fixedDeltaTime * m_LookSensitivity);
 
@@ -60,6 +63,9 @@ public class CameraController : MonoBehaviour
 
 	private void FixedUpdate()
     {
+	    if (GameplayManager.Instance.BookOpen)
+		    return;
+	    
 	    if (m_Player != null && FollowObject == null)
 	    {
 		    transform.position = m_Player.position + Vector3.up * m_CameraVerticalFollowOffset;

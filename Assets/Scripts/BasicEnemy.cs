@@ -36,6 +36,7 @@ public class BasicEnemy : MonoBehaviour
     private NavMeshAgent m_Enemy;
     private int m_CurrentDestinationIndex;
     private bool m_Turning = false;
+    private float m_OldSpeed;
 
     // AddPositionToPath is used by an editor script to populate the m_PathPositions List
     public void AddPositionToPath()
@@ -57,6 +58,23 @@ public class BasicEnemy : MonoBehaviour
         {
             m_Enemy.speed = 0f;
             return;
+        }
+
+        if (GameplayManager.Instance.BookOpen)
+        {
+            if (m_OldSpeed == 0)
+            {
+                m_OldSpeed = m_Enemy.speed;
+            }
+            
+            m_Enemy.speed = 0;
+            return;
+        }
+        
+        if (m_OldSpeed != 0)
+        {
+            m_Enemy.speed = m_OldSpeed;
+            m_OldSpeed = 0;
         }
         
         // Draw Debug Ray
@@ -81,6 +99,9 @@ public class BasicEnemy : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameplayManager.Instance.BookOpen)
+            return;
+
         transform.position = m_Enemy.nextPosition;
     }
 

@@ -30,6 +30,9 @@ public class Platform : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
+        if (GameplayManager.Instance.BookOpen)
+            return;
+        
         m_ElapsedTime += Time.deltaTime;
 
         float elapsedPercentage = m_ElapsedTime / m_TimeToNextPosition;

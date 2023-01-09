@@ -78,13 +78,34 @@ public class PlayerController : MonoBehaviour
         else
             return;
 
+        // Menu opening
+        if (Input.GetKeyDown(KeyCode.B) || Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (GameplayManager.Instance.BookOpen)
+            {
+                GameplayManager.Instance.CloseBook();
+            }
+            else
+            {
+                GameplayManager.Instance.OpenBook();
+            }
+        }
+
+        if (GameplayManager.Instance.BookOpen)
+            return;
+        
         // Jumping
+        if (Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, out RaycastHit _, 0.3f,
+            m_GroundLayerMask))
+        {
+            m_DoubleJumped = false;
+        }
+
         if (Input.GetKeyDown(KeyCode.Space))
         {
             if (Physics.Raycast(transform.position + Vector3.up * 0.2f, Vector3.down, out RaycastHit hit, 0.3f, m_GroundLayerMask))
             {
                 m_Rigidbody.AddForce(Vector3.up * m_JumpForce, ForceMode.Impulse);
-                m_DoubleJumped = false;
                 
                 Vector3 oldVel = m_Rigidbody.velocity;
                 m_Rigidbody.velocity = new Vector3(oldVel.x, 0f, oldVel.z);
@@ -244,6 +265,11 @@ public class PlayerController : MonoBehaviour
     
     private void FixedUpdate()
     {
+        m_Rigidbody.isKinematic = GameplayManager.Instance.BookOpen;
+
+        if (GameplayManager.Instance.BookOpen)
+            return;
+        
         // Running
         Vector3 relativeInput = Quaternion.Euler(0, m_CameraRig.transform.eulerAngles.y, 0) * new Vector3(m_Input.x, 0f, m_Input.y);
 

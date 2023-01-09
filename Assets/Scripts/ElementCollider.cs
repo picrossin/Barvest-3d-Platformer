@@ -22,6 +22,9 @@ public class ElementCollider : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if (GameplayManager.Instance.BookOpen)
+            return;
+
         // Ouch Layer collider
         if (other.gameObject.layer == 6 && !m_Died)
         {
@@ -74,6 +77,9 @@ public class ElementCollider : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
+        if (GameplayManager.Instance.BookOpen)
+            return;
+        
         if (other.gameObject.layer == 7 || other.gameObject.layer == 4)
         {
             Debug.Log("Reset Speed!");

@@ -1333,6 +1333,10 @@ PrefabInstance:
       propertyPath: m_ThirdPersonVirtualCam
       value: 
       objectReference: {fileID: 7155608445158481167}
+    - target: {fileID: 1323416565, guid: 8101463ca55e7de44ad9c71b3746e768, type: 3}
+      propertyPath: m_Radius
+      value: 0.05
+      objectReference: {fileID: 0}
     - target: {fileID: 8088616610127424133, guid: 8101463ca55e7de44ad9c71b3746e768,
         type: 3}
       propertyPath: m_RootOrder
@@ -1346,7 +1350,7 @@ PrefabInstance:
     - target: {fileID: 8088616610127424133, guid: 8101463ca55e7de44ad9c71b3746e768,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.435
       objectReference: {fileID: 0}
     - target: {fileID: 8088616610127424133, guid: 8101463ca55e7de44ad9c71b3746e768,
         type: 3}
@@ -1716,12 +1720,12 @@ PrefabInstance:
     - target: {fileID: 6757818577451648197, guid: f22e48cb01cf5f14fb35da8ddfcd9d48,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.344
+      value: 0.13930471
       objectReference: {fileID: 0}
     - target: {fileID: 6757818577451648197, guid: f22e48cb01cf5f14fb35da8ddfcd9d48,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.11188197
+      value: 0.19526339
       objectReference: {fileID: 0}
     - target: {fileID: 6757818577451648197, guid: f22e48cb01cf5f14fb35da8ddfcd9d48,
         type: 3}
@@ -1763,6 +1767,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Main Camera
       objectReference: {fileID: 0}
+    - target: {fileID: 6757818577451648202, guid: f22e48cb01cf5f14fb35da8ddfcd9d48,
+        type: 3}
+      propertyPath: m_TargetTexture
+      value: 
+      objectReference: {fileID: 8600000, guid: 5c5161bb46f589d4b84a74614167067b, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f22e48cb01cf5f14fb35da8ddfcd9d48, type: 3}
 --- !u!4 &9065621000615085674 stripped
@@ -1801,12 +1810,12 @@ PrefabInstance:
     - target: {fileID: 2198422632474844663, guid: 52822acb5e121414590a3089ba0ccbf4,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.344
+      value: 0.13930471
       objectReference: {fileID: 0}
     - target: {fileID: 2198422632474844663, guid: 52822acb5e121414590a3089ba0ccbf4,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.11188197
+      value: 0.19526339
       objectReference: {fileID: 0}
     - target: {fileID: 2198422632474844663, guid: 52822acb5e121414590a3089ba0ccbf4,
         type: 3}
